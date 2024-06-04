@@ -46,12 +46,26 @@ const logOut=()=>{
 useEffect(()=>{
     const unSubscribe= onAuthStateChanged(auth,currentUser=>{
         setUser(currentUser)
+        if(currentUser){
+            const userInfo={
+                email:currentUser.email
+            }
+            axiosPublic.post('/jwt',userInfo)
+            .then(res=>{
+                if(res.data.token){
+                    localStorage.setItem('access-token',res.data.token)
+                }
+            })
+        }
+        else {
+            localStorage.removeItem('access-token')
+        }
         setLoading(false)
     })
     return () => {
         unSubscribe();
     }
-},[])
+},[axiosPublic])
     const authInfo={
         createUser,
         signInUser,

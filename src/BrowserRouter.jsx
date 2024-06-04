@@ -17,14 +17,7 @@ import SignUp from "./Login-Out/SignUp";
                   path: '/',
                   element: <Home></Home>
               },
-            //   {
-            //       path: '/menu',
-            //       element: <Menue></Menue>
-            //   },
-            //   {
-            //       path: '/order/:category',
-            //       element: <Orders></Orders>
-            //   },
+            //   
               {
                   path: '/login',
                   element: <Login></Login>
@@ -33,10 +26,7 @@ import SignUp from "./Login-Out/SignUp";
                   path: '/signup',
                   element: <SignUp></SignUp>
               },
-            //   {
-            //       path: '/secret',
-            //       element: <Private><Secret></Secret></Private>
-            //   },
+             
             ]
           },
           {
@@ -47,26 +37,7 @@ import SignUp from "./Login-Out/SignUp";
                   path: 'd-home',
                   element:<D_Home></D_Home>
               },
-            //   {
-            //       path: 'addItems',
-            //       element:<AdminRouts> <AddItems></AddItems> </AdminRouts>
-            //   },
-            //   {
-            //       path: 'manageItems',
-            //       element:<ManageItems></ManageItems>
-            //   },
-            //   {
-            //       path: 'cart',
-            //       element:<Cart></Cart>
-            //   },
-            //   {
-            //       path: 'manageBookings',
-            //       element:<ManageBookings></ManageBookings>
-            //   },
-            //   {
-            //       path: 'allUsers',
-            //       element:<AdminRouts> <AllUsers></AllUsers> </AdminRouts>
-            //   },
+            
              
               
             ]
