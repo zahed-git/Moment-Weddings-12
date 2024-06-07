@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "./LayOut/Main/Main";
-import Home from "./LayOut/Main/Pages/Home";
+import Home from "./LayOut/Main/Home/Home";
 import PrivateRout from "./Privates_providers/PrivateRout";
 import Dashbord from "./LayOut/Dashbord/Dashbord";
 import D_Home from "./LayOut/Dashbord/Pages/D_Home";

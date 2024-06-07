@@ -13,6 +13,7 @@ import {
   Card,
   IconButton,
   Collapse,
+  Tooltip,
 } from "@material-tailwind/react";
 import {
   CubeTransparentIcon,
@@ -26,6 +27,7 @@ import {
   PowerIcon,
   RocketLaunchIcon,
   Bars2Icon,
+  BookOpenIcon
 } from "@heroicons/react/24/solid";
 import { NavLink } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
@@ -84,6 +86,7 @@ const Navv = () => {
             color="blue-gray"
             className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto"
           >
+            <Tooltip content={user?.displayName}>
             <Avatar
               variant="circular"
               size="sm"
@@ -91,6 +94,7 @@ const Navv = () => {
               className="border border-gray-900 p-0.5"
               src={user?.photoURL}
             />
+            </Tooltip>
             <ChevronDownIcon
               strokeWidth={2.5}
               className={`h-3 w-3 transition-transform ${isMenuOpen ? "rotate-180" : ""
@@ -171,20 +175,31 @@ const Navv = () => {
           {React.createElement(UserCircleIcon, { className: "h-[18px] w-[18px]" })}{" "}
           <span className="text-gray-900">Home</span>
         </MenuItem></NavLink>
+        <NavLink to='/'><MenuItem className="flex items-center gap-2 lg:rounded-full">
+          {React.createElement(CodeBracketSquareIcon, { className: "h-[18px] w-[18px]" })}{" "}
+          <span className="text-gray-900"> Biodatas</span>
+        </MenuItem></NavLink>
+        <NavLink to='/'><MenuItem className="flex items-center gap-2 lg:rounded-full">
+          {React.createElement(RocketLaunchIcon, { className: "h-[18px] w-[18px]" })}{" "}
+          <span className="text-gray-900"> About Us</span>
+        </MenuItem></NavLink>
+        <NavLink to='/'><MenuItem className="flex items-center gap-2 lg:rounded-full">
+          {React.createElement(BookOpenIcon, { className: "h-[18px] w-[18px]" })}{" "}
+          <span className="text-gray-900">Contact Us</span>
+        </MenuItem></NavLink>
+       
 
         {
           user ?
             <>
-              <h1>{user?.displayName}</h1>
+             <NavLink to='dashbord'><MenuItem className="flex items-center gap-2 lg:rounded-full">
+          {React.createElement(Square3Stack3DIcon, { className: "h-[18px] w-[18px]" })}{" "}
+          <span className="text-gray-900">Dashboard</span>
+        </MenuItem></NavLink>
             </> : <>
               <NavLink to='/login'><MenuItem className="flex items-center gap-2 lg:rounded-full">
                 {React.createElement(CubeTransparentIcon, { className: "h-[18px] w-[18px]" })}{" "}
                 <span className="text-gray-900"> Login</span>
-              </MenuItem></NavLink>
-
-              <NavLink to='/signup'><MenuItem className="flex items-center gap-2 lg:rounded-full">
-                {React.createElement(CodeBracketSquareIcon, { className: "h-[18px] w-[18px]" })}{" "}
-                <span className="text-gray-900"> SignUp</span>
               </MenuItem></NavLink>
             </>
         }
@@ -205,8 +220,8 @@ const Navv = () => {
     );
   }, []);
   return (
-    <div className=" z-40">
-      <Navbar className="mx-auto max-w-screen-xl p-2 lg:rounded-full lg:pl-6">
+    <div className="fixed lg:w-full flex z-40">
+      <Navbar className=" max-w-screen-xl p-2 lg:rounded-full lg:pl-6 opacity-70">
         <div className="relative mx-auto flex items-center justify-between text-blue-gray-900">
           <Typography
             as="a"
