@@ -228,7 +228,7 @@ const Navv = () => {
             href="#"
             className="mr-4 ml-2 cursor-pointer py-1.5 font-medium"
           >
-            <span className=" text-red-700">MOMENTS</span><span className="text-2xl text-gray-600">-</span><span className="text-amber-700">WEDDINGS</span>
+            <span className=" text-red-700">MOMENTS</span> <span className="text-amber-700">WEDDINGS</span>
           </Typography>
           <div className="hidden lg:block">
             {/* -------------------------for lg            */}

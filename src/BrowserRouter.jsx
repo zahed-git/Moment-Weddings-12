@@ -6,6 +6,7 @@ import Dashbord from "./LayOut/Dashbord/Dashbord";
 import D_Home from "./LayOut/Dashbord/Pages/D_Home";
 import Login from "./Login-Out/Login";
 import SignUp from "./Login-Out/SignUp";
+import Detail from "./LayOut/Main/Home/Detail";
 
 
     export   const router = createBrowserRouter([
@@ -16,6 +17,10 @@ import SignUp from "./Login-Out/SignUp";
               {
                   path: '/',
                   element: <Home></Home>
+              },
+              {
+                  path: '/detail/:_id',
+                  element:<PrivateRout><Detail></Detail></PrivateRout> 
               },
             //   
               {
