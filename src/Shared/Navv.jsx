@@ -175,15 +175,15 @@ const Navv = () => {
           {React.createElement(UserCircleIcon, { className: "h-[18px] w-[18px]" })}{" "}
           <span className="text-gray-900">Home</span>
         </MenuItem></NavLink>
-        <NavLink to='/'><MenuItem className="flex items-center gap-2 lg:rounded-full">
+        <NavLink to='/biodata'><MenuItem className="flex items-center gap-2 lg:rounded-full">
           {React.createElement(CodeBracketSquareIcon, { className: "h-[18px] w-[18px]" })}{" "}
           <span className="text-gray-900"> Biodatas</span>
         </MenuItem></NavLink>
-        <NavLink to='/'><MenuItem className="flex items-center gap-2 lg:rounded-full">
+        <NavLink to='/about'><MenuItem className="flex items-center gap-2 lg:rounded-full">
           {React.createElement(RocketLaunchIcon, { className: "h-[18px] w-[18px]" })}{" "}
           <span className="text-gray-900"> About Us</span>
         </MenuItem></NavLink>
-        <NavLink to='/'><MenuItem className="flex items-center gap-2 lg:rounded-full">
+        <NavLink to='/contact'><MenuItem className="flex items-center gap-2 lg:rounded-full">
           {React.createElement(BookOpenIcon, { className: "h-[18px] w-[18px]" })}{" "}
           <span className="text-gray-900">Contact Us</span>
         </MenuItem></NavLink>

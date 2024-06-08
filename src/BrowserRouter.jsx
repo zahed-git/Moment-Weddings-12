@@ -7,6 +7,8 @@ import D_Home from "./LayOut/Dashbord/Pages/D_Home";
 import Login from "./Login-Out/Login";
 import SignUp from "./Login-Out/SignUp";
 import Detail from "./LayOut/Main/Home/Detail";
+import Biodata from "./LayOut/Main/Biodata/Biodata";
+import DetailBio from "./LayOut/Main/Biodata/DetailBio";
 
 
     export   const router = createBrowserRouter([
@@ -30,6 +32,14 @@ import Detail from "./LayOut/Main/Home/Detail";
               {
                   path: '/signup',
                   element: <SignUp></SignUp>
+              },
+              {
+                  path: '/biodata',
+                  element: <Biodata></Biodata>
+              },
+              {
+                  path: '/biodetail/:_id',
+                  element: <PrivateRout><DetailBio></DetailBio></PrivateRout>
               },
              
             ]
