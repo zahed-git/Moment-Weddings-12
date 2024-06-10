@@ -1,266 +1,145 @@
-import {
-    Card,
-    CardHeader,
-    CardBody,
-    Input,
-    Button,
-    Typography,
-    Tabs,
-    TabsHeader,
-    TabsBody,
-    Tab,
-    TabPanel,
-    Select,
-    Option,
-  } from "@material-tailwind/react";
-  import {
-    BanknotesIcon,
-    CreditCardIcon,
-    LockClosedIcon,
-  } from "@heroicons/react/24/solid";
-   
- 
-   
 
+import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
+import './All.css'
+import useBiodata from '../../../Hooks/useBiodata';
+import {  useState } from 'react';
+import BioCard from './BioCard';
 
 const Biodata = () => {
-    const { countries } = useCountries();
-  const [type, setType] = React.useState("card");
-  const [cardNumber, setCardNumber] = React.useState("");
-  const [cardExpires, setCardExpires] = React.useState("");
+    const [biodata] = useBiodata()
+    const [minAge, setMinAge] = useState(0);
+    const [maxAge, setMaxAge] = useState(90);
+    const [gender, setGender] = useState('Male')
+    const [location, setLocation] = useState('Dhaka');
+    const [searchResults, setSearchResults] = useState([biodata]);
+    console.log(searchResults)
+
+    const handleMinAgeChange = (event) => {
+        setMinAge(Number(event.target.value));
+    };
+
+    const handleMaxAgeChange = (event) => {
+        setMaxAge(Number(event.target.value));
+    };
+
+    const handleGenderChange = (event) => {
+        setGender(event.target.value);
+    };
+    const handleLocationChange = (event) => {
+        setLocation(event.target.value);
+    };
+
+    const handleSearch = () => {
+            const result = biodata.filter(person =>  
+                (person.biodataType === gender ) &&
+                ( person.permanentDivision === location) &&
+                ( person.age >= minAge && person.age <= maxAge)) 
+           setSearchResults(result)
+    };
+
     return (
-        <div className="flex ">
-            {/* -------------------------------search start---------------------------------- */}
-            <div className="w-2/11">
-            <Card className="w-full max-w-[24rem]">
-      <CardHeader
-        color="gray"
-        floated={false}
-        shadow={false}
-        className="m-0 grid place-items-center px-4 py-8 text-center"
-      >
-        <div className="mb-4 h-20 p-6 text-white">
-          {type === "card" ? (
-            <CreditCardIcon className="h-10 w-10 text-white" />
-          ) : (
-            <img alt="paypal " className="w-14 " src="https://docs.material-tailwind.com/icons/paypall.png" />
-          )}
-        </div>
-        <Typography variant="h5" color="white">
-          Material Tailwind PRO
-        </Typography>
-      </CardHeader>
-      <CardBody>
-        <Tabs value={type} className="overflow-visible">
-          <TabsHeader className="relative z-0 ">
-            <Tab value="card" onClick={() => setType("card")}>
-              Pay with Card
-            </Tab>
-            <Tab value="paypal" onClick={() => setType("paypal")}>
-              Pay with PayPal
-            </Tab>
-          </TabsHeader>
-          <TabsBody
-            className="!overflow-x-hidden !overflow-y-visible"
-            animate={{
-              initial: {
-                x: type === "card" ? 400 : -400,
-              },
-              mount: {
-                x: 0,
-              },
-              unmount: {
-                x: type === "card" ? 400 : -400,
-              },
-            }}
-          >
-            <TabPanel value="card" className="p-0">
-              <form className="mt-12 flex flex-col gap-4">
-                <div>
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="mb-2 font-medium"
-                  >
-                    Your Email
-                  </Typography>
-                  <Input
-                    type="email"
-                    placeholder="name@mail.com"
-                    className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                    labelProps={{
-                      className: "before:content-none after:content-none",
-                    }}
-                  />
-                </div>
- 
-                <div className="my-3">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="mb-2 font-medium "
-                  >
-                    Card Details
-                  </Typography>
- 
-                 
-                  <div className="my-4 flex items-center gap-4">
-                    <div>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="mb-2 font-medium"
-                      >
-                        Expires
-                      </Typography>
-                      
-                    </div>
-                    <div>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="mb-2 font-medium"
-                      >
-                        CVC
-                      </Typography>
-                      <Input
-                        maxLength={4}
-                        containerProps={{ className: "min-w-[72px]" }}
-                        placeholder="000"
-                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                        labelProps={{
-                          className: "before:content-none after:content-none",
-                        }}
-                      />
-                    </div>
-                  </div>
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="mb-2 font-medium"
-                  >
-                    Holder Name
-                  </Typography>
-                  <Input
-                    placeholder="name@mail.com"
-                    className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                    labelProps={{
-                      className: "before:content-none after:content-none",
-                    }}
-                  />
-                </div>
-                <Button size="lg">Pay Now</Button>
-                <Typography
-                  variant="small"
-                  color="gray"
-                  className="mt-2 flex items-center justify-center gap-2 font-medium opacity-60"
-                >
-                  <LockClosedIcon className="-mt-0.5 h-4 w-4" /> Payments are
-                  secure and encrypted
-                </Typography>
-              </form>
-            </TabPanel>
-            <TabPanel value="paypal" className="p-0">
-              <form className="mt-12 flex flex-col gap-4">
-                <div>
-                  <Typography
-                    variant="paragraph"
-                    color="blue-gray"
-                    className="mb-4 font-medium"
-                  >
-                    Personal Details
-                  </Typography>
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="mb-2 font-medium"
-                  >
-                    Your Email
-                  </Typography>
-                  <Input
-                    type="email"
-                    placeholder="name@mail.com"
-                    className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                    labelProps={{
-                      className: "before:content-none after:content-none",
-                    }}
-                  />
-                </div>
- 
-                <div className="my-6">
-                  <Typography
-                    variant="paragraph"
-                    color="blue-gray"
-                    className="mb-4 font-medium"
-                  >
-                    Billing Address
-                  </Typography>
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="mb-2 font-medium"
-                  >
-                    Country
-                  </Typography>
-                  <Select
-                    placeholder="USA"
-                    className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                    labelProps={{
-                      className: "before:content-none after:content-none",
-                    }}
-                    menuProps={{ className: "h-48" }}
-                  >
-                    {countries.map(({ name, flags }) => (
-                      <Option key={name} value={name}>
-                        <div className="flex items-center gap-x-2">
-                          <img
-                            src={flags.svg}
-                            alt={name}
-                            className="h-4 w-4 rounded-full object-cover"
-                          />
-                          {name}
-                        </div>
-                      </Option>
-                    ))}
-                  </Select>
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="mt-4 -mb-2 font-medium"
-                  >
-                    Postal Code
-                  </Typography>
-                  <Input
-                    placeholder="0000"
-                    className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                    labelProps={{
-                      className: "before:content-none after:content-none",
-                    }}
-                    containerProps={{ className: "mt-4" }}
-                  />
-                </div>
-                <Button size="lg">pay with paypal</Button>
-                <Typography
-                  variant="small"
-                  color="gray"
-                  className="flex items-center justify-center gap-2 font-medium opacity-60"
-                >
-                  <LockClosedIcon className="-mt-0.5 h-4 w-4" /> Payments are
-                  secure and encrypted
-                </Typography>
-              </form>
-            </TabPanel>
-          </TabsBody>
-        </Tabs>
-      </CardBody>
-    </Card>
+        <div className=''>
+            <Helmet>
+                <title>Moment||BioData</title>
+            </Helmet>
+            <h1 className='text-white'> ,</h1>
+            <div>
 
             </div>
-            {/* -------------------------------------search end---------------------------- */}
-            {/* ----------------------------------result--------------- */}
-            <div className="flex-1">
+            <div className="lg:flex mt-10">
+                {/* -------------------------------search start---------------------------------- */}
+                <div className="w-2/11">
 
+                    <Tabs >
+                        <TabList>
+                            <Tab>Filter</Tab>
+                            <Tab>Advanced Filter</Tab>
+                        </TabList>
+
+                        <TabPanel>
+
+                            <div className='border shadow-md border-s-blue-gray-300 p-3 rounded-xl'>
+                                <div>
+                                    <form >
+                                        <div className="sm:col-span-3">
+                                            <label htmlFor="age" className="block text-sm font-medium leading-6 text-gray-900">Set Age Limit</label>
+                                            <div>
+                                                <label>
+                                                    <select value={minAge} onChange={handleMinAgeChange}>
+                                                        {[...Array(51).keys()].map(age => (
+                                                            <option key={age} value={age}>{age}</option>
+                                                        ))}
+                                                    </select>
+                                                </label>
+
+                                                <label>
+                                                    to
+                                                    <select value={maxAge} onChange={handleMaxAgeChange}>
+                                                        {[...Array(91).keys()].map(age => (
+                                                            <option key={age} value={age}>{age}</option>
+                                                        ))}
+                                                    </select>
+                                                </label>
+
+
+                                            </div>
+
+                                        </div>
+
+                                        <div className="sm:col-span-3 mt-6">
+                                            <label htmlFor="country" className="block text-sm font-medium leading-6 text-gray-900">Bio-Data Type</label>
+                                            <div className="mt-2">
+                                                <select onChange={handleGenderChange} name="type" autoComplete="country-name" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+
+                                                    <option value={''}>Any</option>
+                                                    <option value={'Male'}>Male</option>
+                                                    <option value={'Female'}>Female</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div className="sm:col-span-3 mt-6">
+                                            <label htmlFor="country" className="block text-sm font-medium leading-6 text-gray-900">By Division</label>
+                                            <div className="mt-2">
+                                                <select onChange={handleLocationChange} name="location" autoComplete="country-name" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                                                    <option><button>Dhaka</button></option>
+                                                    <option><button>Chattagram</button></option>
+                                                    <option><button>Maymansign</button></option>
+                                                    <option><button>Sylhet</button></option>
+                                                    <option><button>Rangpur</button></option>
+                                                    <option><button>Barisal</button></option>
+                                                    <option><button>Khulna</button></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <button onClick={handleSearch} type="button" className="mt-4 justify-end text-white bg-deep-orange-400 hover:bg-blue-gray-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                            Search
+
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </TabPanel>
+                        <TabPanel>
+                            {/* 2nd tab-------------------- */}
+                        </TabPanel>
+                    </Tabs>
+                </div>
+                {/* -------------------------------------search end---------------------------- */}
+                {/* ----------------------------------result--------------- */}
+                <div className=" grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:ml-6">
+                   
+                        {searchResults.map((person, index) => (
+                            <BioCard key={index} person={person}></BioCard>
+                        ))}
+                    
+                    
+                </div>
             </div>
+
         </div>
     );
 };
