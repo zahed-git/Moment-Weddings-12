@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 // import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import Swal from "sweetalert2";
 import SocialLogin from "../SmallComponent/SocialLogin";
+import { Helmet } from "react-helmet-async";
 
 
 const Login = () => {
@@ -49,7 +50,9 @@ const Login = () => {
     // }
     return (
         <div>
-
+            <Helmet>
+                <title>Moment||login</title>
+            </Helmet>
             <div className="h-screen flex">
                 <div className="hidden lg:flex w-full lg:w-1/2 login_img_section
           justify-around items-center">
@@ -102,7 +105,7 @@ const Login = () => {
                             <button type="submit" className="block w-full bg-indigo-600 mt-5 py-2 rounded-2xl hover:bg-[#4285F4]/90 hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2">Login</button>
                             <SocialLogin></SocialLogin>
 
-                            
+
                             <div className="flex justify-between mt-4">
                                 <span className="text-xs ml-2 hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all">Forgot Password ?</span>
 

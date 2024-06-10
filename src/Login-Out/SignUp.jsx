@@ -4,6 +4,7 @@ import useAxiosPublic from "../Hooks/useAxiosPublic";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import SocialLogin from "../SmallComponent/SocialLogin";
+import { Helmet } from "react-helmet-async";
 
 
 const SignUp = () => {
@@ -65,6 +66,9 @@ const SignUp = () => {
     }
     return (
         <div>
+            <Helmet>
+                <title>Moment||singUp</title>
+            </Helmet>
             <div className="h-screen md:flex">
                 <div
                     className="relative overflow-hidden md:flex w-1/2 bg-gradient-to-tr from-blue-800 to-purple-700 i justify-around items-center hidden">

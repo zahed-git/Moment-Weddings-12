@@ -1,18 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
+
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
-import { FaTrash, FaUsers } from "react-icons/fa6";
+import { FaTrash } from "react-icons/fa6";
+import { Helmet } from "react-helmet-async";
+import useUsers from "../../../Hooks/useUsers";
 
 
 const ManageUser = () => {
     const axiosSecure=useAxiosSecure()
-    const { data: users = [] } = useQuery({
-        queryKey: ['users'],
-        queryFn: async () => {
-            const res = await axiosSecure.get("/users")
-            return res.data
-        }
-    })
+    
+    const [users]=useUsers()
     const handleAdmin = (user) => {
         Swal.fire({
             title: "Are you sure?",
@@ -49,42 +46,7 @@ const ManageUser = () => {
         });
 
     }
-    const handlePremium = (user) => {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, make it Premium!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                axiosSecure.patch(`/users/premium/${user._id}`)
-                    .then(res => {
-                        console.log(res)
-                        if (res.data.modifiedCount > 0) {
-                        //    --------------------
-                            Swal.fire({
-                                title: "Updated",
-                                text: `${user.name} is now Premium Member`,
-                                icon: "success"
-                            });
-                        }
-                        else {
-                            Swal.fire({
-                                title: "Fail",
-                                text: "Operation fail.",
-                                icon: "error"
-                            });
-                        }
-                    })
-
-
-            }
-        });
-
-    }
+    
     const handleDelete = (id) => {
         Swal.fire({
             title: "Are you sure?",
@@ -122,8 +84,10 @@ const ManageUser = () => {
 
     }
     return (
-        <div>
-            
+        <div className="mt-10">
+            <Helmet>
+                <title>Moment||dashboard||userManagement</title>
+            </Helmet>
 {/* --------------------------------------------------- */}
 <table className="min-w-full divide-y divide-gray-200 overflow-x-auto">
     <thead className="bg-gray-50">
@@ -164,18 +128,13 @@ const ManageUser = () => {
                     </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{user.usertype}</div>
                     {
                                             user.usertype === 'premium' ?
-                                                <>
-                                                    <h2 >Premium</h2>
-                                                </> : <>
-                                                    <button
-                                                        onClick={() => handlePremium(user)}
-                                                        className="btn  btn-xs text-white bg-red-300 text-sm">
-                                                        <FaUsers />
-                                                    </button>
-                                                </>
+                                            <>
+                                            <h2 >premium</h2>
+                                        </> : <>
+                                            User
+                                        </>
                                         }
                 </td>
                 
@@ -187,8 +146,8 @@ const ManageUser = () => {
                                                 </> : <>
                                                     <button
                                                         onClick={() => handleAdmin(user)}
-                                                        className="btn  btn-xs text-white bg-red-300 text-sm">
-                                                        <FaUsers />
+                                                        className="btn p-2 rounded  btn-xs text-white bg-red-300 text-sm">
+                                                       Make Admin
                                                     </button>
                                                 </>
                                         }

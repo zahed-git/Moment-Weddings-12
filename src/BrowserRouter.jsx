@@ -17,12 +17,14 @@ import ManageUser from "./LayOut/Dashbord/Pages/ManageUser";
 import ApprovPremium from "./LayOut/Dashbord/Pages/ApprovPremium";
 import ApproveConReq from "./LayOut/Dashbord/Pages/ApproveConReq";
 import AdminRout from "./Privates_providers/AdminRout";
+import ErrorPage from "./ErrorPage";
 
 
     export   const router = createBrowserRouter([
         {
             path: "/",
             element: <Main></Main>,
+            errorElement: <ErrorPage />,
             children: [
               {
                   path: '/',
@@ -55,7 +57,9 @@ import AdminRout from "./Privates_providers/AdminRout";
           {
             path: "dashbord",
             element: <PrivateRout><Dashbord></Dashbord> </PrivateRout>,
+            errorElement: <ErrorPage />,
             children: [
+              
               
               {
                   path: 'editbio',
