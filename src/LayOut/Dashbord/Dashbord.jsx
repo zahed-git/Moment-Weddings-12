@@ -3,14 +3,12 @@ import useAuth from "../../Hooks/useAuth";
 import Swal from "sweetalert2";
 import useAdmin from "../../Hooks/useAdmin";
 import { Helmet } from "react-helmet-async";
-import useIsPrimium from "../../Hooks/useIsPrimium";
 
 
 const Dashbord = () => {
     const { logOut } = useAuth()
     const [isAdmin] = useAdmin()
-    const [preMem]=useIsPrimium()
-    console.log(preMem)
+    
     const handleLogOut = () => {
         logOut()
             .then(() => {

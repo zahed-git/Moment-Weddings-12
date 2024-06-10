@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import useUsers from "../../../Hooks/useUsers";
 
 
 const DetailBio = () => {
     const { _id } = useParams()
+    const [users]=useUsers()
     const [user, setUser] = useState({})
     const [show, setShow] = useState([null])
     const { biodataId, name, biodataType, profileImage, permanentDivision, presentDivision, age, dob, height, weight, race, fathersName, mothersName, occupation, expectedPartnerAge, expectedPartnerHeight, expectedPartnerWeight, contactEmail, mobileNumber } = user
@@ -44,7 +46,7 @@ const DetailBio = () => {
                             <h1>Mother : {mothersName}</h1>
                             <h1>Present Division : {presentDivision}</h1>
                             <h1>Expected Partner Height : {expectedPartnerHeight}</h1>
-                            <h1>Mobile : {mobileNumber}</h1>
+                            
                         </div>
                         <div className="px-2 space-y-3">
                             <h1>Age : {age}</h1>
@@ -53,7 +55,9 @@ const DetailBio = () => {
                             <h1>Weight : {weight}</h1>
                             <h1>Expected Partner Age : {expectedPartnerAge}</h1>
                             <h1>Expected Partner Weight : {expectedPartnerWeight}</h1>
-                            <h1>Email : {contactEmail}</h1>
+                            
+
+                        
 
                         </div>
 
@@ -61,11 +65,30 @@ const DetailBio = () => {
 
                     </div>
 
+<div className="px-2 space-y-3">
+    {/* <div>
+        Contact iformation
+    </div> */}
+<div >
+{user.usertype === 'premium' ?
+< >
+<h2 className="text-xl font-bold text-center">Contact info</h2>
+<div className="   mx-auto my-5 ">
+<h1>Mobile : {mobileNumber}</h1>
+<h1>Email : {contactEmail}</h1>
+</div>
 
+</>:<>
+<Link to={`/checkout/${biodataId}`}><button className="w-3/4 block mx-auto rounded-full bg-pink-700 hover:shadow-lg font-semibold text-white px-6 py-2">Requset For Contact info</button></Link>
+</>
+
+}
+</div>
+</div>
 
                     <div className="flex items-center justify-center gap-2 w-[80%] mx-auto mt-5 mb-10">
                         <button className="flex-1 border border-[#231f39] rounded-[4px] py-3 text-white bg-[#231f39] transition-all duration-150 ease-in hover:bg-[#472e99]">Add to  Favourite</button>
-                        <button className="flex-1 border border-[#231f39] text-[#ffffff] rounded-[4px] py-3 transition-all duration-150 ease-in hover:bg-[#472e99]  hover:text-white">Requset For Contact</button>
+                        
                     </div>
 
                 </section>

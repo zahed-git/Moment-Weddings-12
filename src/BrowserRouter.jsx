@@ -18,6 +18,7 @@ import ApprovPremium from "./LayOut/Dashbord/Pages/ApprovPremium";
 import ApproveConReq from "./LayOut/Dashbord/Pages/ApproveConReq";
 import AdminRout from "./Privates_providers/AdminRout";
 import ErrorPage from "./ErrorPage";
+import CheckOut from "./LayOut/Main/Biodata/CheckOut";
 
 
     export   const router = createBrowserRouter([
@@ -50,6 +51,10 @@ import ErrorPage from "./ErrorPage";
               {
                   path: '/biodetail/:_id',
                   element: <PrivateRout><DetailBio></DetailBio></PrivateRout>
+              },
+              {
+                  path: '/checkout/:biodataId',
+                  element: <CheckOut></CheckOut>
               },
              
             ]
