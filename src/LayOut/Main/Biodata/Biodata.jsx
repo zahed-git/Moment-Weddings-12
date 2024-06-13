@@ -9,14 +9,12 @@ import {  useState } from 'react';
 import BioCard from './BioCard';
 
 const Biodata = () => {
-    const [biodata] = useBiodata()
+    const [biodata,refetch] = useBiodata()
     const [minAge, setMinAge] = useState(0);
     const [maxAge, setMaxAge] = useState(90);
-    const [gender, setGender] = useState('Male')
+    const [gender, setGender] = useState('')
     const [location, setLocation] = useState('Dhaka');
-    const [searchResults, setSearchResults] = useState([biodata]);
-    console.log(searchResults)
-
+    const [searchResults, setSearchResults] = useState(biodata);
     const handleMinAgeChange = (event) => {
         setMinAge(Number(event.target.value));
     };
@@ -34,9 +32,10 @@ const Biodata = () => {
 
     const handleSearch = () => {
             const result = biodata.filter(person =>  
-                (person.biodataType === gender ) &&
+                (person.biodataType === gender  ) &&
                 ( person.permanentDivision === location) &&
                 ( person.age >= minAge && person.age <= maxAge)) 
+                refetch()
            setSearchResults(result)
     };
 

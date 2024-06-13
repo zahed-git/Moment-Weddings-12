@@ -9,7 +9,7 @@ import useUsers from "../../../Hooks/useUsers";
 const ManageUser = () => {
     const axiosSecure=useAxiosSecure()
     
-    const [users]=useUsers()
+    const [users,refetch]=useUsers()
     const handleAdmin = (user) => {
         Swal.fire({
             title: "Are you sure?",
@@ -25,6 +25,7 @@ const ManageUser = () => {
                     .then(res => {
                         console.log(res)
                         if (res.data.modifiedCount > 0) {
+                            refetch()
                         //    --------------------
                             Swal.fire({
                                 title: "Updated",
@@ -62,6 +63,7 @@ const ManageUser = () => {
                     .then(res => {
                         console.log(res)
                         if (res.data.deletedCount > 0) {
+                            refetch()
                             // --------------
                             Swal.fire({
                                 title: "Deleted!",

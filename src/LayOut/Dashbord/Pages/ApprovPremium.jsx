@@ -7,7 +7,7 @@ import useUsers from "../../../Hooks/useUsers";
 
 const ApprovPremium = () => {
     const axiosSecure = useAxiosSecure()
-    const [users]=useUsers()
+    const [users,refetch]=useUsers()
 
     const handlePremium = (user) => {
         Swal.fire({
@@ -24,6 +24,7 @@ const ApprovPremium = () => {
                     .then(res => {
                         console.log(res)
                         if (res.data.modifiedCount > 0) {
+                            refetch()
                             //    --------------------
                             Swal.fire({
                                 title: "Updated",
@@ -60,6 +61,7 @@ const ApprovPremium = () => {
                     .then(res => {
                         console.log(res)
                         if (res.data.deletedCount > 0) {
+                            refetch()
                             // --------------
                             Swal.fire({
                                 title: "Deleted!",
