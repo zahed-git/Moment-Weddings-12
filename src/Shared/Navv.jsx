@@ -39,7 +39,6 @@ const Navv = () => {
   const { user, logOut } = useAuth()
   const [isNavOpen, setIsNavOpen] = React.useState(false);
   const handleLogOut = () => {
-    console.log(user)
     logOut()
       .then(() => {
         Swal.fire({

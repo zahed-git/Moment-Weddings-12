@@ -6,10 +6,6 @@ import { Link } from "react-router-dom";
 const BioCard = ({ person }) => {
 
     const {_id, name, age, biodataType, occupation, permanentDivision, profileImage } = person
-
-
-
-    console.log(person)
     return (
         <div>
 

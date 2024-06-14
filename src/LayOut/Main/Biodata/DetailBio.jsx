@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import useUsers from "../../../Hooks/useUsers";
 
 
 const DetailBio = () => {
     const { _id } = useParams()
-    const [users]=useUsers()
     const [user, setUser] = useState({})
     const [show, setShow] = useState([null])
     const { biodataId, name, biodataType, profileImage, permanentDivision, presentDivision, age, dob, height, weight, race, fathersName, mothersName, occupation, expectedPartnerAge, expectedPartnerHeight, expectedPartnerWeight, contactEmail, mobileNumber } = user
-    console.log(show)
+    
     useEffect(() => {
         const fetchData = async () => {
             const res = await fetch("http://localhost:5000/biodata");
@@ -108,7 +106,7 @@ const DetailBio = () => {
                     <div className="flow-root">
                         <ul role="list" className="divide-y divide-gray-200 dark:divide-gray-700">
 
-                            {/* {show && show.map((user, index) => (<li key={index} className="py-3 sm:py-4">
+                            {/* {show && show?.map((user, index) => (<li key={index} className="py-3 sm:py-4">
                             <div className="flex items-center">
                                 <div className="flex-shrink-0">
                                     <img className="w-8 h-8 rounded-full" src={user?.profileImage} alt="Neil image" />

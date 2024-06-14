@@ -1,24 +1,34 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { useEffect, useState } from 'react';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure'
+import useAxiosPublic from '../../../Hooks/useAxiosPublic';
+import useAuth from '../../../Hooks/useAuth';
+import Swal from 'sweetalert2';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 
-const CheckoutForm = () => {
-
+const CheckoutForm = ({ biodataId }) => {
+  console.log(biodataId)
+  const { user } = useAuth()
   const [error, setError] = useState()
   const stripe = useStripe();
   const elements = useElements();
-  const axiosSecure =useAxiosSecure()
-  const price= 5
-  const [clientSecret,setClientSecret]=useState()
+  const axiosPublic = useAxiosPublic()
+  const axiosSecure = useAxiosSecure()
+  const navigate=useNavigate()
+  const location=useLocation()
+  const totalPrice = 5
+  const [clientSecret, setClientSecret] = useState()
+  const [transactionId, setTransactionId] = useState()
+  const from = location.state?.from?.pathname || '/biodata'
 
-useEffect(()=>{
- axiosSecure.post('/create-payment-intent',price)
- .then(res=>{
-  console.log(res.data)
-  setClientSecret(res.data.clientSecret)
- })
-},[axiosSecure,price])
+  useEffect(() => {
+    axiosSecure.post('/create-payment-intent', { price: totalPrice })
+      .then(res => {
+        console.log(res.data)
+        setClientSecret(res.data.clientSecret)
+      })
+  }, [axiosSecure])
 
   const handleSubmit = async (event) => {
     // Block native form submission.
@@ -52,8 +62,56 @@ useEffect(()=>{
       console.log('[PaymentMethod]', paymentMethod);
       setError('')
     }
-  };
+    // confirm payment
+    const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: card,
+        billing_details: {
+          email: user?.email || 'anonymous',
+          name: user?.displayName || 'anonymous'
+        }
+      }
+    })
+    if (confirmError) {
+      console.log('confirm error')
+    }
+    else {
+      console.log('payment intent', paymentIntent)
+      if (paymentIntent.status === 'succeeded') {
+        console.log('transaction id', paymentIntent.id);
+        setTransactionId(paymentIntent.id);
 
+        // now save the payment in the database
+        const payment = {
+          email: user.email,
+          price: totalPrice,
+          transactionId: paymentIntent.id,
+          date: new Date(), // utc date convert. use moment js to 
+          biodataId: biodataId,
+
+          // cartIds: cart.map(item => item._id),
+          // menuItemIds: cart.map(item => item.menuId),
+          status: 'pending'
+        }
+
+        axiosPublic.post('contact-req', payment)
+        .then(res => {
+            if (res.data.insertedId) {
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Request successfully Submited",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                navigate(from, { replace: true })
+            }
+        })
+
+      }
+
+    }
+  }
   return (
     <div className=''>
       <h2 className='text-white mb-14'>.</h2>
@@ -78,6 +136,9 @@ useEffect(()=>{
           Pay
         </button>
         <p className='text-red-500'>{error}</p>
+        {
+          transactionId && <h1 className='text-2xl text-red-400'>your transaction Id : {transactionId}</h1>
+        }
       </form>
     </div>
 

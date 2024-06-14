@@ -56,12 +56,9 @@ const CheckOut = () => {
                     <div className="shadow">
                         <div className="flex items-center bg-purple-400 rounded-t-lg border-purple-500 border-b">
                             <label className="w-1/3 text-right mr-8 p-4 text-purple-200">Pls pay first :</label>
+                            <label className=" text-right mr-8 p-4 text-purple-200">You will be charged usd : 5$</label>
                            
-                                <Link to={'/checkout/payment'} >
-
-                                    <button className="flex-1 p-4 pl-0 bg-transparent placeholder-purple-300 outline-none text-white overflow-ellipsis overflow-hidden">Click here for payment</button>
-
-                                </Link>
+                               
                                 
                           
 
@@ -86,7 +83,11 @@ const CheckOut = () => {
                         </div>
 
                     </div>
-                    
+                    <Link to={`/checkout/payment/${biodataId}`} >
+
+<button className="flex-1 p-4 pl-0 bg-transparent placeholder-purple-300 outline-none text-white overflow-ellipsis overflow-hidden">Click here for payment</button>
+
+</Link>
                     <button disabled={!card.length}  type="submit"className="block w-full bg-indigo-600 mt-5 py-2 rounded-2xl hover:bg-[#4285F4]/90 hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2"> Submit</button>
                    
                     

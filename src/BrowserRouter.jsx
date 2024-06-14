@@ -54,7 +54,7 @@ import Payment from "./LayOut/Main/Biodata/Payment";
                   element: <PrivateRout><DetailBio></DetailBio></PrivateRout>
               },
               {
-                  path: '/checkout/payment',
+                  path: '/checkout/payment/:biodataId',
                   element: <Payment></Payment>
               },
               {
