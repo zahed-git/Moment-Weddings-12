@@ -20,6 +20,7 @@ import AdminRout from "./Privates_providers/AdminRout";
 import ErrorPage from "./ErrorPage";
 import CheckOut from "./LayOut/Main/Biodata/CheckOut";
 import Payment from "./LayOut/Main/Biodata/Payment";
+import ShowConReq from "./LayOut/Dashbord/Pages/ShowConReq";
 
 
     export   const router = createBrowserRouter([
@@ -50,7 +51,7 @@ import Payment from "./LayOut/Main/Biodata/Payment";
                   element: <Biodata></Biodata>
               },
               {
-                  path: '/biodetail/:_id',
+                  path: '/biodetail/:biodataId',
                   element: <PrivateRout><DetailBio></DetailBio></PrivateRout>
               },
               {
@@ -102,6 +103,10 @@ import Payment from "./LayOut/Main/Biodata/Payment";
               {
                   path: 'approveContactReq',
                   element:<AdminRout><ApproveConReq></ApproveConReq></AdminRout>
+              },
+              {
+                  path: 'my-con-req/showConReq/:biodataId',
+                  element:<ShowConReq></ShowConReq>
               },
             
              

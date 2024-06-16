@@ -5,6 +5,7 @@ import useAxiosPublic from '../../../Hooks/useAxiosPublic';
 import useAuth from '../../../Hooks/useAuth';
 import Swal from 'sweetalert2';
 import { useLocation, useNavigate } from 'react-router-dom';
+import useBiodata from '../../../Hooks/useBiodata';
 
 
 const CheckoutForm = ({ biodataId }) => {
@@ -21,11 +22,15 @@ const CheckoutForm = ({ biodataId }) => {
   const [clientSecret, setClientSecret] = useState()
   const [transactionId, setTransactionId] = useState()
   const from = location.state?.from?.pathname || '/biodata'
+  const [biodata]=useBiodata()
+  const infoFor=biodata?.find(bio=>bio.biodataId===biodataId)
+  console.log(biodata)
+  console.log(infoFor)
 
   useEffect(() => {
     axiosSecure.post('/create-payment-intent', { price: totalPrice })
       .then(res => {
-        console.log(res.data)
+        // console.log(res.data)
         setClientSecret(res.data.clientSecret)
       })
   }, [axiosSecure])
@@ -88,9 +93,6 @@ const CheckoutForm = ({ biodataId }) => {
           transactionId: paymentIntent.id,
           date: new Date(), // utc date convert. use moment js to 
           biodataId: biodataId,
-
-          // cartIds: cart.map(item => item._id),
-          // menuItemIds: cart.map(item => item.menuId),
           status: 'pending'
         }
 

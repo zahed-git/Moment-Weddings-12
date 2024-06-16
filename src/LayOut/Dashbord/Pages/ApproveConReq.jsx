@@ -3,11 +3,13 @@ import useContactReq from "../../../Hooks/useContactReq";
 import { FaUpload } from "react-icons/fa6";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import useAuth from "../../../Hooks/useAuth";
 
 
 const ApproveConReq = () => {
-    const [conReq,refetch] = useContactReq()
-    const axiosSecure=useAxiosSecure()
+
+    const [conReq, refetch] = useContactReq()
+    const axiosSecure = useAxiosSecure()
 
     const handleUpdate = (_id) => {
         Swal.fire({
@@ -20,8 +22,8 @@ const ApproveConReq = () => {
             confirmButtonText: "Yes ,give the Permition"
         }).then((result) => {
             if (result.isConfirmed) {
-            console.log(_id)
-            axiosSecure.patch(`/contact-req/pending/${_id}`,{})
+                console.log(_id)
+                axiosSecure.patch(`/contact-req/pending/${_id}`, {})
                     .then(res => {
                         if (res.data.modifiedCount > 0) {
                             refetch()
@@ -117,7 +119,7 @@ const ApproveConReq = () => {
                                                     <FaUpload />
                                                 </button>
                                             </> : <>
-<h1 className="px-6 py-4 text-gray-500"> Already settled</h1>
+                                                <h1 className="px-6 py-4 text-gray-500"> Already settled</h1>
                                             </>
                                     }
 

@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 
 const BioCard = ({ person }) => {
-
-    const {_id, name, age, biodataType, occupation, permanentDivision, profileImage } = person
+    const {_id,biodataId, name, age, biodataType, occupation, permanentDivision, profileImage } = person
+    
     return (
         <div>
 
@@ -45,7 +45,7 @@ const BioCard = ({ person }) => {
                     </li>
                 </ul>
                 <div className="p-4 border-t mx-8 mt-2">
-                    <Link to={`/biodetail/${_id}`}><button className="w-3/4 block mx-auto rounded-full bg-pink-700 hover:shadow-lg font-semibold text-white px-6 py-2">View Profile</button></Link>
+                    <Link to={`/biodetail/${biodataId}`}><button className="w-3/4 block mx-auto rounded-full bg-pink-700 hover:shadow-lg font-semibold text-white px-6 py-2">View Profile</button></Link>
                 </div>
             </div>
         </div>
