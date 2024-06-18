@@ -2,20 +2,53 @@ import { Helmet } from "react-helmet-async";
 import useContactReq from "../../../Hooks/useContactReq";
 import useAuth from "../../../Hooks/useAuth";
 import { Link } from "react-router-dom";
-import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 
 const MyContactReq = () => {
     const [conReq,refetch] = useContactReq()
-    const axiosPablic=useAxiosPublic()
+    const axiosSecure=useAxiosSecure()
     const { user } = useAuth()
+    console.log(conReq)
     const data = conReq?.filter(con => (con.email === user.email))
     const handleDelete=(id)=>{
-        axiosPablic.delete(`/contact-req/${id}`)
-        .then(res=>{
-           console.log(res.data)
-           refetch()
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+               axiosSecure.delete(`/contact-req/${id}`)
+                .then(res => {
+
+                        if (res.data.deletedCount > 0) {
+                            refetch()
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: " deleted successfully.",
+                                icon: "success"
+
+
+                            });
+                        }
+                    })
+                    .catch(err=>{
+                        Swal.fire({
+                                    title: "Error!",
+                                    text: `${err.message}`,
+                                    icon: "error"
+    
+    
+                                });
+                    })
+            }
         })
+
       
    }
     return (

@@ -2,22 +2,54 @@ import { Helmet } from "react-helmet-async";
 import useAuth from "../../../Hooks/useAuth";
 import useFavList from "../../../Hooks/useFavList";
 import { Link } from "react-router-dom";
-import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 
 const FavBio = () => {
     const { user } = useAuth()
     const [favList, refetch] = useFavList()
-    const axiosPablic = useAxiosPublic
+    const axiosSecure=useAxiosSecure()
     const userFav = favList?.filter(data => data.email === user.email)
-    const handleDelete = (id) => {
-        axiosPablic.delete(`/fav-list/${id}`)
-            .then(res => {
-                refetch()
-                console.log(res.data)
-            })
+    const handleDelete=(id)=>{
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+               axiosSecure.delete(`/fav-list/${id}`)
+                .then(res => {
 
-    }
+                        if (res.data.deletedCount > 0) {
+                            refetch()
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: " deleted successfully.",
+                                icon: "success"
+
+
+                            });
+                        }
+                    })
+                    .catch(err=>{
+                        Swal.fire({
+                                    title: "Error!",
+                                    text: `${err.message}`,
+                                    icon: "error"
+    
+    
+                                });
+                    })
+            }
+        })
+
+      
+   }
 
     return (
         <div>

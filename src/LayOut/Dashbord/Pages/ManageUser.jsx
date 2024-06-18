@@ -61,7 +61,6 @@ const ManageUser = () => {
             if (result.isConfirmed) {
                 axiosSecure.delete(`/users/${id}`)
                     .then(res => {
-                        console.log(res)
                         if (res.data.deletedCount > 0) {
                             refetch()
                             // --------------
