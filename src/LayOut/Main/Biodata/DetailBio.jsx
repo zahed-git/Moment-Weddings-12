@@ -7,7 +7,7 @@ import useCurrentUser from "../../../Hooks/useCurrentUser";
 
 const DetailBio = () => {
     const { biodataId } = useParams()
-    const[currentUser]=useCurrentUser()
+    const [currentUser] = useCurrentUser()
     const id = parseInt(biodataId)
     const { user } = useAuth()
     const axiosPablic = useAxiosPublic()
@@ -47,7 +47,7 @@ const DetailBio = () => {
                         timer: 1500
                     });
                 }
-                else{
+                else {
                     Swal.fire({
                         position: "center",
                         icon: "error",

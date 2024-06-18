@@ -10,7 +10,6 @@ const FavBio = () => {
     const { user } = useAuth()
     const [favList, refetch] = useFavList()
     const axiosSecure=useAxiosSecure()
-    const userFav = favList?.filter(data => data.email === user.email)
     const handleDelete=(id)=>{
         Swal.fire({
             title: "Are you sure?",
@@ -82,7 +81,7 @@ const FavBio = () => {
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
                         {
-                            userFav && userFav.map((data, idx) =>
+                            favList && favList.map((data, idx) =>
                             (<tr key={idx}>
                                 <td className="px-6 py-4 whitespace-nowrap">
                                     <div className="flex items-center">
