@@ -66,11 +66,10 @@ const MyContactReq = () => {
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     <div className="text-sm text-gray-900">
                                         {
-                                            data.state === 'pending' ?
+                                            data?.status === 'pending' ?
                                                 <>
-                                                    <h2 className="text-deep-orange-700 ">pending</h2>
+                                                    <h2 className="text-deep-orange-700 ">{data.status}</h2>
                                                 </> : <>
-
                                                     <Link to={`/dashbord/my-con-req/showConReq/${data.biodataId}`}>Show</Link>
                                                 </>
                                         }
@@ -79,7 +78,7 @@ const MyContactReq = () => {
 
                                 <td className="px-6 py-4 whitespace-nowrap  text-sm font-medium">
                                     {
-                                        data.state === 'pending' ?
+                                        data?.status === 'pending' ?
                                             <>
                                                 <button
                                                     onClick={() => handleDelete(data._id)}

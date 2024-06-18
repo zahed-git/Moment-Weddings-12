@@ -23,8 +23,9 @@ const ApproveConReq = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 console.log(_id)
-                axiosSecure.patch(`/contact-req/pending/${_id}`, {})
+                axiosSecure.patch(`/contact-req/pending/${_id}`)
                     .then(res => {
+                        console.log(res.data)
                         if (res.data.modifiedCount > 0) {
                             refetch()
                             //    --------------------
@@ -81,50 +82,44 @@ const ApproveConReq = () => {
                         {
                             conReq && conReq.map((data, idx) =>
                             (<tr key={idx}>
-                                <td className="px-6 py-4 whitespace-nowrap">
-                                    <div className="flex items-center">
+                                {
+                                    data?.status === 'pending' ?
+                                        <>
+                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                <div className="flex items-center">
 
-                                        <div className="ml-4">
-                                            <div className="text-sm font-medium text-gray-900">
-                                                {data.email}
-                                            </div>
+                                                    <div className="ml-4">
+                                                        <div className="text-sm font-medium text-gray-900">
+                                                            {data.email}
+                                                        </div>
 
-                                        </div>
-                                    </div>
-                                </td>
-                                <td className="px-6 py-4 text-gray-500 text-center">
-                                    {data.biodataId}
-                                </td>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4 text-gray-500 text-center">
+                                                {data.biodataId}
+                                            </td>
 
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    <div className="text-sm text-gray-900">
-                                        {
-                                            data.state === 'pending' ?
-                                                <>
-                                                    <h2 className="text-deep-orange-700 ">pending</h2>
-                                                </> : <>
-                                                    Req Settled
-                                                </>
-                                        }
-                                    </div>
-                                </td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                <div className="text-sm text-gray-900">
+                                                    <h2 className="text-deep-orange-700 ">{data.status}</h2>
+                                                </div>
+                                            </td>
 
-                                <td className="px-6 py-4 whitespace-nowrap  text-sm font-medium">
-                                    {
-                                        data.state === 'pending' ?
-                                            <>
+                                            <td className="px-6 py-4 whitespace-nowrap  text-sm font-medium">
                                                 <button
                                                     onClick={() => handleUpdate(data._id)}
                                                     className="btn btn-ghost btn-xs text-red-500 text-sm">
                                                     <FaUpload />
                                                 </button>
-                                            </> : <>
-                                                <h1 className="px-6 py-4 text-gray-500"> Already settled</h1>
-                                            </>
-                                    }
 
 
-                                </td>
+
+                                            </td>
+                                        </> : <>
+                                        </>
+                                }
+                              
                             </tr>)
                             )
                         }

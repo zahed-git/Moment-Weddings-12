@@ -14,7 +14,7 @@ const DetailBio = () => {
     const [userr, setuserr] = useState({})
     const [show, setShow] = useState([null])
     const { name, biodataType, profileImage, permanentDivision, presentDivision, age, dob, height, weight, race, fathersName, mothersName, occupation, expectedPartnerAge, expectedPartnerHeight, expectedPartnerWeight, contactEmail, mobileNumber } = userr
-console.log(currentUser[0].usertype)
+
     useEffect(() => {
         const fetchData = async () => {
             const res = await fetch("http://localhost:5000/biodata");
@@ -105,7 +105,7 @@ console.log(currentUser[0].usertype)
                         <div className="px-2 space-y-3">
 
                             <div >
-                                {currentUser[0].usertype === 'premium' ?
+                                {currentUser[0]?.usertype === 'premium' ?
                                     < >
                                         <h2 className="text-xl font-bold text-center">Contact info</h2>
                                         <div className="   mx-auto my-5 ">
