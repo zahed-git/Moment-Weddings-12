@@ -17,14 +17,42 @@ const EditBio = () => {
     const dateStr = startDate.toString();
     const extractedDate = dateStr?.slice(4, 15);
 
-
+    const [ft, setFt] = useState()
+    const [inch, setIn] = useState()
+    const [wegt, setWeight] = useState()
+    const [pWeight, setPWeight] = useState()
+    const [pAge, setPAge] = useState()
+    const [pHeight, setPHeight] = useState()
+    const heightVal = `${ft}'${inch}"`
 
     console.log(image_hosting_api)
     const [refetch, currentUserBio] = useCurrentBio()
-    const user = currentUserBio[0]
-    const { _id, name, biodataId, biodataType, profileImage, permanentDivision, presentDivision, age, dob, height, weight, race, fathersName, mothersName, occupation, expectedPartnerAge, expectedPartnerHeight, expectedPartnerWeight, contactEmail, mobileNumber } = user || {}
+    const cUser = currentUserBio[0]
+
+    const { _id, name, biodataId, biodataType, profileImage, permanentDivision, presentDivision, age, dob, height, weight, race, fathersName, mothersName, occupation, expectedPartnerAge, expectedPartnerHeight, expectedPartnerWeight, contactEmail, mobileNumber } = cUser || {}
 
     const axiosPublic = useAxiosPublic()
+
+    const handleFeet = (event) => {
+        setFt(Number(event.target.value));
+    };
+    const handleInch = (event) => {
+        setIn(Number(event.target.value));
+    };
+    const handleWeight = (event) => {
+        setWeight(Number(event.target.value));
+    };
+    const handlePAge = (event) => {
+        setPAge(Number(event.target.value));
+    };
+    const handlePWeight = (event) => {
+        setPWeight(Number(event.target.value));
+    };
+    const handlePHeight = (event) => {
+        setPHeight(Number(event.target.value));
+    };
+
+
     const {
         register,
         handleSubmit,
@@ -37,69 +65,68 @@ const EditBio = () => {
         const presentDivision = data.presentDivision
         const age = data.age
         const dob = extractedDate
-        const height = data.height
-        const weight = data.weight
+        const height = heightVal
+        const weight = wegt
         const race = data.race
         const fathersName = data.fathersName
         const mothersName = data.mothersName
         const occupation = data.occupation
-        const expectedPartnerAge = data.expectedPartnerAge
-        const expectedPartnerHeight = data.expectedPartnerHeight
-        const expectedPartnerWeight = data.expectedPartnerWeight
+        const expectedPartnerAge = pAge
+        const expectedPartnerHeight = pHeight
+        const expectedPartnerWeight = pWeight
         const contactEmail = data.contactEmail
         const mobileNumber = data.mobileNumber
         const imageFile = { image: data.photo[0] };
-        console.log(typeof dob)
 
-        // const res = await axiosPublic.post(image_hosting_api, imageFile, {
-        //     headers: {
-        //         'Content-Type': 'multipart/form-data'
-        //     }
+        const res = await axiosPublic.post(image_hosting_api, imageFile, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
 
-        // })
+        })
 
 
-        // const photo = res.data.data.display_url
-        // console.log(photo)
-        // const userInfo = {
-        //     name: name,
-        //     profileImage: photo,
-        //     biodataType: biodataType,
-        //     permanentDivision: permanentDivision,
-        //     presentDivision: presentDivision,
-        //     age: age,
-        //     dob: dob,
-        //     height: height,
-        //     weight: weight,
-        //     race: race,
-        //     fathersName: fathersName,
-        //     mothersName: mothersName,
-        //     occupation: occupation,
-        //     expectedPartnerAge: expectedPartnerAge,
-        //     expectedPartnerHeight: expectedPartnerHeight,
-        //     expectedPartnerWeight: expectedPartnerWeight,
-        //     contactEmail: contactEmail,
-        //     mobileNumber: mobileNumber,
-        // }
-        // console.log(userInfo)
-        // axiosPublic.put(`/biodata/${_id}`, userInfo)
-        //     .then(res => {
-        //         refetch()
-        //         console.log("axios put", res.data)
-        //         if (res.data.modifiedCount) {
-        //             Swal.fire({
-        //                 position: "center",
-        //                 icon: "success",
-        //                 title: "Successfully Updated",
-        //                 showConfirmButton: false,
-        //                 timer: 1500
-        //             });
-        //         }
+        const photo = res.data.data.display_url
+        console.log(photo)
+        const userInfo = {
+            name: name,
+            profileImage: photo,
+            biodataType: biodataType,
+            permanentDivision: permanentDivision,
+            presentDivision: presentDivision,
+            age: age,
+            dob: dob,
+            height: height,
+            weight: weight,
+            race: race,
+            fathersName: fathersName,
+            mothersName: mothersName,
+            occupation: occupation,
+            expectedPartnerAge: expectedPartnerAge,
+            expectedPartnerHeight: expectedPartnerHeight,
+            expectedPartnerWeight: expectedPartnerWeight,
+            contactEmail: contactEmail,
+            mobileNumber: mobileNumber,
+        }
+        console.log(userInfo)
+        axiosPublic.put(`/biodata/${_id}`, userInfo)
+            .then(res => {
+                refetch()
+                console.log("axios put", res.data)
+                if (res.data.modifiedCount) {
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Successfully Updated",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
 
-        //     })
-        //     .catch(err => {
-        //         console.log(err.message)
-        //     })
+            })
+            .catch(err => {
+                console.log(err.message)
+            })
     }
     return (
         <div>
@@ -178,13 +205,48 @@ const EditBio = () => {
                                         <h1 className=""><h1 className="text-xl font-bold">Father:</h1><input {...register("fathersName")} defaultValue={fathersName} type="text" name="" id="" className="rounded bg-blue-gray-500 p-1 text-center" /></h1>
                                         <h1 className=""><h1 className="text-xl font-bold">Mother :</h1><input {...register("mothersName")} defaultValue={mothersName} type="text" name="" id="" className="rounded bg-blue-gray-500 p-1 text-center" /></h1>
                                         <h1 className=""><h1 className="text-xl font-bold">Present Division :</h1><input {...register("presentDivision")} defaultValue={presentDivision} type="text" name="" id="" className="rounded bg-blue-gray-500 p-1 text-center" /></h1>
-                                        <h1 className=""><h1 className="text-xl font-bold">Expected partner Height :</h1><input {...register("expectedPartnerHeight")} defaultValue={expectedPartnerHeight} type="text" name="" id="" className="rounded bg-blue-gray-500  p-1 text-center" /></h1>
+                                        <h1 className=""><h1 className="text-xl font-bold">Expected partner Height :</h1>
+                                        <input {...register("expectedPartnerHeight")} defaultValue={expectedPartnerHeight} type="text" name="" id="" className="rounded bg-blue-gray-500  p-1 text-center" />
+                                        <label className="flex">
+                                                <select onChange={handlePHeight} className="rounded bg-blue-gray-500 p-1 text-center" >
+                                                    {[...Array(530).keys()].map(feet => (
+                                                        <option key={feet} value={feet}>{feet}</option>
+                                                    ))}
+
+                                                </select>
+                                                <h1 className="text-xl font-bold">inch</h1>
+                                            </label>
+                                        </h1>
 
 
                                     </div>
                                     <div className=" px-2 space-y-6">
-                                        <h1 className=""><h1 className="text-xl font-bold">Age :</h1><input {...register("age")} defaultValue={age} type="text" name="" id="" className="rounded bg-blue-gray-500 p-1 text-center" /></h1>
-                                        <h1 className=""><h1 className="text-xl font-bold">Height :</h1><input {...register("height")} defaultValue={height} type="text" name="" id="" className="rounded bg-blue-gray-500 p-1 text-center" /></h1>
+                                        <h1 className=""><h1 className="text-xl font-bold">Age :</h1>
+                                            <input {...register("age")} defaultValue={age} type="text" name="" id="" className="rounded bg-blue-gray-500 p-1 text-center" />
+                                        </h1>
+                                        <h1 className=""><h1 className="text-xl font-bold">Height :</h1>
+                                            <div className="flex gap-2">
+                                                <label className="flex">
+                                                    <select onChange={handleFeet} className="rounded bg-blue-gray-500 p-1 text-center" >
+                                                        {[...Array(13).keys()].map(feet => (
+                                                            <option key={feet} value={feet}>{feet}</option>
+                                                        ))}
+
+                                                    </select>
+                                                    <h1 className="text-xl font-bold">feet</h1>
+                                                </label>
+
+                                                <label className="flex">
+                                                    <select onChange={handleInch} className="rounded bg-blue-gray-500 p-1 text-center" >
+                                                        {[...Array(13).keys()].map(inch => (
+                                                            <option key={inch} value={inch}>{inch}</option>
+                                                        ))}
+                                                    </select>
+                                                    <h1 className="text-xl font-bold">inch</h1>
+                                                </label>
+                                            </div>
+
+                                        </h1>
                                         <h1 className=""><h1 className="text-xl font-bold">Race :</h1>
                                             <select {...register("race")} className="rounded bg-blue-gray-500 p-1 text-center">
                                                 <option value="Asian">Asian</option>
@@ -192,9 +254,39 @@ const EditBio = () => {
                                                 <option value="European">Euopian</option>
                                             </select>
                                         </h1>
-                                        <h1 className=""><h1 className="text-xl font-bold">Weight :</h1><input {...register("weight")} defaultValue={weight} type="text" name="" id="" className="rounded bg-blue-gray-500 p-1 text-center" /></h1>
-                                        <h1 className=""><h1 className="text-xl font-bold">Expect Partner Age :</h1><input {...register("expectedPartnerAge")} defaultValue={expectedPartnerAge} type="text" name="" id="" className="rounded bg-blue-gray-500 p-1 text-center" /></h1>
-                                        <h1 className=""><h1 className="text-xl font-bold">Expect Partner Weight :</h1><input {...register("expectedPartnerWeight")} defaultValue={expectedPartnerWeight} type="text" name="" id="" className="rounded bg-blue-gray-500 p-1 text-center" /></h1>
+                                        <h1 className=""><h1 className="text-xl font-bold">Weight :</h1>
+                                           <label className="flex">
+                                                <select onChange={handleWeight} className="rounded bg-blue-gray-500 p-1 text-center" >
+                                                    {[...Array(530).keys()].map(feet => (
+                                                        <option key={feet} value={feet}>{feet}</option>
+                                                    ))}
+
+                                                </select>
+                                                <h1 className="text-xl font-bold">Kg</h1>
+                                            </label>
+                                        </h1>
+                                        <h1 className=""><h1 className="text-xl font-bold">Expect Partner Age :</h1>
+                                        <label className="flex">
+                                                <select onChange={handlePAge} className="rounded bg-blue-gray-500 p-1 text-center" >
+                                                    {[...Array(530).keys()].map(feet => (
+                                                        <option key={feet} value={feet}>{feet}</option>
+                                                    ))}
+
+                                                </select>
+                                                <h1 className="text-xl font-bold">Years</h1>
+                                            </label>
+                                        </h1>
+                                        <h1 className=""><h1 className="text-xl font-bold">Expect Partner Weight :</h1>
+                                         <label className="flex">
+                                                <select onChange={handlePWeight} className="rounded bg-blue-gray-500 p-1 text-center" >
+                                                    {[...Array(530).keys()].map(feet => (
+                                                        <option key={feet} value={feet}>{feet}</option>
+                                                    ))}
+
+                                                </select>
+                                                <h1 className="text-xl font-bold">Kg</h1>
+                                            </label>
+                                        </h1>
 
 
 
@@ -218,8 +310,8 @@ const EditBio = () => {
 
                                 <h2 className="text-xl font-bold text-center">Contact info</h2>
                                 <div className="   mx-auto my-5 space-y-2">
-                                    <h1 className=" "> <h2 className="text-2xl font-bold">Mobile :</h2> <input {...register("mobileNumber")} defaultValue={mobileNumber} type="text" name="" id="" className="bg-blue-gray-500 rounded" /></h1>
-                                    <h1 className=" "> <h2 className="text-2xl font-bold">Email :</h2><input {...register("contactEmail")} defaultValue={contactEmail} type="text" name="" id="" className="bg-blue-gray-500 rounded" /></h1>
+                                    <h1 className=" "> <h2 className="text-2xl font-bold">Mobile :</h2> <input {...register("mobileNumber",{ required: true })} defaultValue={mobileNumber} type="text" name="" id="" className="bg-blue-gray-500 rounded" /></h1>
+                                    <h1 className=" "> <h2 className="text-2xl font-bold">Email :</h2><input {...register("contactEmail")} disabled defaultValue={contactEmail} type="text" name="" id="" className="bg-blue-gray-500 rounded" /></h1>
                                 </div>
 
 
