@@ -8,7 +8,7 @@ import { Helmet } from "react-helmet-async";
 const Dashbord = () => {
     const { logOut } = useAuth()
     const [isAdmin] = useAdmin()
-    
+
     const handleLogOut = () => {
         logOut()
             .then(() => {
@@ -23,14 +23,14 @@ const Dashbord = () => {
             .catch(error => console.log(error))
     }
     return (
-        <div className="flex">
+        <div >
             <Helmet>
                 <title>Moment||dashboard</title>
             </Helmet>
-            <div>
-                <div className="flex h-screen bg-gray-100">
+            <div className=" lg:flex gap-4">
+                <div className="flex sm:h-96 lg:h-screen sm:mx-auto bg-gray-100 lg:flex-1">
 
-                    <div className="hidden md:flex flex-col w-64 bg-gray-800">
+                    <div className="sm:mx-auto md:flex lg:flex flex-col w-64 bg-gray-800">
                         <div className="flex items-center justify-center h-16 bg-gray-900">
                             <span className="text-white font-bold uppercase">My Dashbord</span>
                         </div>
@@ -38,42 +38,42 @@ const Dashbord = () => {
                             <nav className="flex-1 px-2 py-4 bg-gray-800 space-y-3">
                                 {/* {
                                     isAdmin ? <> */}
-                                        <NavLink to='admin' href="#" className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
+                                <NavLink to='admin' href="#" className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
 
-                                            Admin Dashbord
-                                        </NavLink>
-                                        <NavLink to='manageUser' href="#" className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
+                                    Admin Dashbord
+                                </NavLink>
+                                <NavLink to='manageUser' href="#" className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
 
-                                            Manage Users
-                                        </NavLink>
-                                        <NavLink to='approvePremium' href="#" className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
+                                    Manage Users
+                                </NavLink>
+                                <NavLink to='approvePremium' href="#" className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
 
-                                            Approved premium
-                                        </NavLink>
-                                        <NavLink to='approveContactReq' href="#" className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
+                                    Approved premium
+                                </NavLink>
+                                <NavLink to='approveContactReq' href="#" className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
 
-                                            Approved Contact Request
-                                        </NavLink>
+                                    Approved Contact Request
+                                </NavLink>
 
 
-                                    {/* </> : <> */}
-                                        <NavLink to='editbio' href="#" className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
+                                {/* </> : <> */}
+                                <NavLink to='editbio' href="#" className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
 
-                                            Edit Bio-Data
-                                        </NavLink>
-                                        <NavLink to='viewbio' href="#" className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
+                                    Edit Bio-Data
+                                </NavLink>
+                                <NavLink to='viewbio' href="#" className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
 
-                                            View Bio-Data
-                                        </NavLink>
-                                        <NavLink to='my-con-req' href="#" className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
+                                    View Bio-Data
+                                </NavLink>
+                                <NavLink to='my-con-req' href="#" className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
 
-                                            My Contact Request
-                                        </NavLink>
-                                        <NavLink to='my-fav-bio' href="#" className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
+                                    My Contact Request
+                                </NavLink>
+                                <NavLink to='my-fav-bio' href="#" className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
 
-                                            Favourite Bio-Data
-                                        </NavLink>
-                                    {/* </>
+                                    Favourite Bio-Data
+                                </NavLink>
+                                {/* </>
 
                                 } */}
                                 <a href="#" className="flex items-center space-x-2 bg-pink-700 hover:bg-blue-700 text-gray-100 px-4 py-2 rounded transition duration-150" title="Return Home">
@@ -95,10 +95,11 @@ const Dashbord = () => {
 
 
                 </div>
+                <div className="flex-auto">
+                    <Outlet></Outlet>
+                </div>
             </div>
-            <div>
-                <Outlet></Outlet>
-            </div>
+
 
         </div>
     );

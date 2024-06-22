@@ -4,13 +4,14 @@ import useFavList from "../../../Hooks/useFavList";
 import { Link } from "react-router-dom";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import Taitle from "../../../SmallComponent/Taitle";
 
 
 const FavBio = () => {
     const { user } = useAuth()
     const [favList, refetch] = useFavList()
-    const axiosSecure=useAxiosSecure()
-    const handleDelete=(id)=>{
+    const axiosSecure = useAxiosSecure()
+    const handleDelete = (id) => {
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -21,8 +22,8 @@ const FavBio = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-               axiosSecure.delete(`/fav-list/${id}`)
-                .then(res => {
+                axiosSecure.delete(`/fav-list/${id}`)
+                    .then(res => {
 
                         if (res.data.deletedCount > 0) {
                             refetch()
@@ -35,26 +36,30 @@ const FavBio = () => {
                             });
                         }
                     })
-                    .catch(err=>{
+                    .catch(err => {
                         Swal.fire({
-                                    title: "Error!",
-                                    text: `${err.message}`,
-                                    icon: "error"
-    
-    
-                                });
+                            title: "Error!",
+                            text: `${err.message}`,
+                            icon: "error"
+
+
+                        });
                     })
             }
         })
 
-      
-   }
+
+    }
 
     return (
-        <div>
+        <div className="mt-10">
             <Helmet>
                 <title>Moment||dashboard||Fav-Bio</title>
             </Helmet>
+            <Taitle
+                heading={"Your favorite Bio-data"}
+            >
+            </Taitle>
             <div className="mt-10">
 
                 <table className="min-w-full divide-y divide-gray-200 overflow-x-auto">

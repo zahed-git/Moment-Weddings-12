@@ -8,14 +8,14 @@ const useCurrentUser = () => {
     const {user}=useAuth()
     const email=user.email
     const axiosPablic=useAxiosPublic()
-    const {refetch,data:currentUser = []}=useQuery({
+    const {data:currentUser = []}=useQuery({
         queryKey:[`/users/${email}`],
         queryFn: async()=>{
             const res= await axiosPablic.get(`/users/${email}`)
             return res.data
         }
     })
-    return [currentUser,refetch]
+    return [currentUser]
 };
 
 export default useCurrentUser;

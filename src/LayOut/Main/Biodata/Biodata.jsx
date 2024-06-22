@@ -13,7 +13,7 @@ const Biodata = () => {
     const [minAge, setMinAge] = useState(0);
     const [maxAge, setMaxAge] = useState(90);
     const [gender, setGender] = useState('')
-    const [location, setLocation] = useState('Dhaka');
+    const [location, setLocation] = useState('');
     const [searchResults, setSearchResults] = useState(biodata);
     const handleMinAgeChange = (event) => {
         setMinAge(Number(event.target.value));
@@ -27,16 +27,49 @@ const Biodata = () => {
         setGender(event.target.value);
     };
     const handleLocationChange = (event) => {
-        setLocation(event.target.value);
+        const location =event.target.value
+        if(location==="Any"){
+            setLocation('')
+        }
+        else{
+            setLocation(location)
+        }
     };
 
     const handleSearch = () => {
-            const result = biodata.filter(person =>  
-                (person.biodataType === gender  ) &&
-                ( person.permanentDivision === location) &&
-                ( person.age >= minAge && person.age <= maxAge)) 
-                refetch()
-           setSearchResults(result)
+        if(location===''){
+            if(gender===''){
+                const result = biodata.filter(person =>  
+                    ( person.age >= minAge && person.age <= maxAge)) 
+                    refetch()
+               setSearchResults(result)
+            }
+               else{
+                const result = biodata.filter(person =>  
+                    (person.biodataType === gender   ) &&
+                    ( person.age >= minAge && person.age <= maxAge)) 
+                    refetch()
+               setSearchResults(result)
+               }
+        }
+        else{
+            if(gender===''){
+                const result = biodata.filter(person =>  
+                    ( person.permanentDivision === location) &&
+                    ( person.age >= minAge && person.age <= maxAge)) 
+                    refetch()
+               setSearchResults(result)
+            }
+               else{
+                const result = biodata.filter(person =>  
+                    (person.biodataType === gender   ) &&
+                    ( person.permanentDivision === location) &&
+                    ( person.age >= minAge && person.age <= maxAge)) 
+                    refetch()
+               setSearchResults(result)
+               }
+        }
+        
     };
 
     return (
@@ -103,6 +136,7 @@ const Biodata = () => {
                                             <label htmlFor="country" className="block text-sm font-medium leading-6 text-gray-900">By Division</label>
                                             <div className="mt-2">
                                                 <select onChange={handleLocationChange} name="location" autoComplete="country-name" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                                                    <option><button>Any</button></option>
                                                     <option><button>Dhaka</button></option>
                                                     <option><button>Chattagram</button></option>
                                                     <option><button>Maymansign</button></option>

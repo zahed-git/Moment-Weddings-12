@@ -4,13 +4,13 @@ import useAuth from "../../../Hooks/useAuth";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import Taitle from "../../../SmallComponent/Taitle";
 
 
 const MyContactReq = () => {
     const [conReq,refetch] = useContactReq()
     const axiosSecure=useAxiosSecure()
     const { user } = useAuth()
-    console.log(conReq)
     const data = conReq?.filter(con => (con.email === user.email))
     const handleDelete=(id)=>{
         Swal.fire({
@@ -52,10 +52,14 @@ const MyContactReq = () => {
       
    }
     return (
-        <div>
+        <div className="mt-10">
             <Helmet>
                 <title>Moment||dashboard||con-req</title>
             </Helmet>
+            <Taitle
+                        heading={"My Contact Request"}
+                    >
+                    </Taitle>
             <div className="mt-10">
 
                 <table className="min-w-full divide-y divide-gray-200 overflow-x-auto">

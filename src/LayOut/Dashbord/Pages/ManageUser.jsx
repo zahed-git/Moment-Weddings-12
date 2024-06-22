@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import { FaTrash } from "react-icons/fa6";
 import { Helmet } from "react-helmet-async";
 import useUsers from "../../../Hooks/useUsers";
+import Taitle from "../../../SmallComponent/Taitle";
 
 
 const ManageUser = () => {
@@ -89,6 +90,10 @@ const ManageUser = () => {
             <Helmet>
                 <title>Moment||dashboard||userManagement</title>
             </Helmet>
+            <Taitle
+                        heading={"Manage  All Users"}
+                    >
+                    </Taitle>
 {/* --------------------------------------------------- */}
 <table className="min-w-full divide-y divide-gray-200 overflow-x-auto">
     <thead className="bg-gray-50">

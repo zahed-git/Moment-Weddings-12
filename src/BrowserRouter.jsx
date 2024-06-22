@@ -5,7 +5,6 @@ import PrivateRout from "./Privates_providers/PrivateRout";
 import Dashbord from "./LayOut/Dashbord/Dashbord";
 import Login from "./Login-Out/Login";
 import SignUp from "./Login-Out/SignUp";
-import Detail from "./LayOut/Main/Home/Detail";
 import Biodata from "./LayOut/Main/Biodata/Biodata";
 import DetailBio from "./LayOut/Main/Biodata/DetailBio";
 import EditBio from "./LayOut/Dashbord/Pages/EditBio";
@@ -21,6 +20,9 @@ import ErrorPage from "./ErrorPage";
 import CheckOut from "./LayOut/Main/Biodata/CheckOut";
 import Payment from "./LayOut/Main/Biodata/Payment";
 import ShowConReq from "./LayOut/Dashbord/Pages/ShowConReq";
+import D_Home from "./LayOut/Dashbord/Pages/D_Home";
+import About from "./LayOut/Main/Home/About";
+import Contact from "./LayOut/Main/Home/Contact";
 
 
     export   const router = createBrowserRouter([
@@ -33,11 +35,7 @@ import ShowConReq from "./LayOut/Dashbord/Pages/ShowConReq";
                   path: '/',
                   element: <Home></Home>
               },
-              {
-                  path: '/detail/:_id',
-                  element:<PrivateRout><Detail></Detail></PrivateRout> 
-              },
-            //   
+             
               {
                   path: '/login',
                   element: <Login></Login>
@@ -49,6 +47,14 @@ import ShowConReq from "./LayOut/Dashbord/Pages/ShowConReq";
               {
                   path: '/biodata',
                   element: <Biodata></Biodata>
+              },
+              {
+                  path: '/about',
+                  element: <About></About>
+              },
+              {
+                  path: '//contact',
+                  element: <Contact></Contact>
               },
               {
                   path: '/biodetail/:biodataId',
@@ -72,6 +78,10 @@ import ShowConReq from "./LayOut/Dashbord/Pages/ShowConReq";
             children: [
               
               
+              {
+                  path: '/dashbord',
+                  element:<D_Home></D_Home>
+              },
               {
                   path: 'editbio',
                   element:<EditBio></EditBio>

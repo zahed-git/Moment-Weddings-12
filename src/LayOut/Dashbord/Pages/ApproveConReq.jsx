@@ -4,6 +4,7 @@ import { FaUpload } from "react-icons/fa6";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import useAuth from "../../../Hooks/useAuth";
+import Taitle from "../../../SmallComponent/Taitle";
 
 
 const ApproveConReq = () => {
@@ -53,10 +54,14 @@ const ApproveConReq = () => {
     }
 
     return (
-        <div>
+        <div className="mt-10">
             <Helmet>
                 <title>Moment||dashboard||Con-req</title>
             </Helmet>
+            <Taitle
+                        heading={"Contact Request Approval page"}
+                    >
+                    </Taitle>
             <div className="mt-10">
 
                 <table className="min-w-full divide-y divide-gray-200 overflow-x-auto">

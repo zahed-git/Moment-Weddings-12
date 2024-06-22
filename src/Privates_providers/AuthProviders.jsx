@@ -7,7 +7,7 @@ export const AuthContext= createContext()
 
 const AuthProviders = ({children}) => {
     const [user,setUser]=useState(null)
-    const [loading,setLoading]=useState(false)
+    const [loading,setLoading]=useState(true)
     const axiosPublic=useAxiosPublic()
     const googleProvider= new GoogleAuthProvider()
     const gitProvider= new GithubAuthProvider()
@@ -62,7 +62,7 @@ useEffect(()=>{
             localStorage.removeItem('access-token')
             setLoading(false)
         }
-        
+        setLoading(false)
     })
     return () => {
         unSubscribe();

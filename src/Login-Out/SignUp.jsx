@@ -10,7 +10,6 @@ const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
 
 const SignUp = () => {
-    console.log(image_hosting_key)
     const { createUser, updateUserProfile } = useAuth()
     const axiosPublic = useAxiosPublic()
     const navigate = useNavigate()
@@ -34,7 +33,6 @@ const SignUp = () => {
             }
 
         })
-        console.log(res.data)
         if (res.data.success) {
             const photo = res.data.data.display_url
 

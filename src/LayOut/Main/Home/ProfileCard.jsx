@@ -1,72 +1,102 @@
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
 
-import 'swiper/css';
-import 'swiper/css/navigation';
-import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardFooter,
-    Typography,
-} from "@material-tailwind/react";
+
+
+
 import Taitle from '../../../SmallComponent/Taitle';
 import { Link } from 'react-router-dom';
 import useClient from '../../../Hooks/useClient';
 
 const ProfileCard = () => {
-    const [clients]=useClient()
+    const [clients] = useClient()
     return (
         <div >
             <Taitle
                 heading={"Our Premium clients"}
             >
             </Taitle>
-            <Swiper navigation={true} modules={[Navigation]} classNameName="mySwiper">
+            <table className="min-w-full divide-y divide-gray-200 overflow-x-auto mx-auto">
+                <thead className="bg-gray-50">
+                    <tr>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                           
+                        </th>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Id
+                        </th>
 
-                {
-                    clients && clients.map((data, idx) =>
-                        <SwiperSlide
-                            key={idx}
-                            data={data}>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Status
+                        </th>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Permanent  division
+                        </th>
 
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
 
-                            <Card className="w-96 mx-auto">
-                                <CardHeader floated={false} className="h-80">
-                                    <img src={data.profile_image} alt="profile-picture" />
-                                </CardHeader>
-                                <CardBody className="text-center">
-                                    <Typography variant="h4" color="blue-gray" className="mb-2">
-                                       {data.name}
-                                    </Typography>
-                                    <Typography color="blue-gray" className="font-medium" >
-                                        {data.occupation}
-                                    </Typography>
-                                    <Typography color="blue-gray" className="font-medium" >
-                                       Gender: {data.biodata_type}
-                                    </Typography>
-                                </CardBody>
-                                <CardFooter className="flex justify-center gap-7 ">
-                                    <div className='flex gap-10'>
-                                    <Typography color="blue-gray" className="font-medium" >
-                                       Age: {data.age}
-                                    </Typography>
-                                    <Typography color="blue-gray" className="font-medium" >
-                                       From: {data.permanent_division}
-                                    </Typography>
-                                    
+                        </th>
+                    </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                    {
+                        clients && clients.map((data, idx) =>
+                        (<tr key={idx}>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                                <div className="flex items-center">
+
+                                    <div className="ml-4">
+                                        <div className="text-sm font-medium text-gray-900">
+                                            <div className="flex-shrink-0 h-10 w-10">
+                                                <img className="h-10 w-10 rounded-full" src={data.profileImage} alt="profile_img" />
+                                            </div>
+                                            <div className="px-6 py-4 text-gray-500 text-center">
+                                            Age : {data.age}, &nbsp;
+                                          {data.occupation} 
+                                            </div>
+                                           
+                                         
+                                        </div>
+
                                     </div>
-                                    
-                                </CardFooter>
-                                <Typography color="blue-gray" className='flex  justify-center' >
-                                   
-                                <Link to={`/detail/${data._id}`}><button className='mx-auto w-56 my-6 py-3 text-base font-bold rounded-lg  bg-lime-300  '>View Profile</button></Link>
-                                </Typography>
-                            </Card>
+                                </div>
+                            </td>
+                            <td className="px-6 py-4 text-gray-500 text-center">
+                               {data.biodataId}
+                            </td>
 
-                        </SwiperSlide>)
-                }
-            </Swiper>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <div className="text-sm text-gray-900">
+                                    <h2 className="text-gray-500 ">{data.biodataType}</h2>
+                                </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <div className="text-sm text-gray-900">
+                                    <h2 className="text-gray-500 ">{data.permanentDivision}</h2>
+                                </div>
+                            </td>
+
+                            <td className="px-6 py-4 whitespace-nowrap  text-sm font-medium">
+                                <Link
+                                    to={`/biodetail/${data.biodataId}`}
+                                    className="btn btn-ghost text-gray-500 btn-xs text-sm">
+                                    See Full Bio Detail
+                                </Link>
+
+
+                            </td>
+
+
+                        </tr>)
+                        )
+                    }
+
+                </tbody>
+            </table>
+
+
+
+
+
+
         </div>
     );
 };

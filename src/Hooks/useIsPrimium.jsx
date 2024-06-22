@@ -7,7 +7,7 @@ const useIsPrimium = () => {
     const {user}=useAuth()
     console.log(user)
     const axiosSecure=useAxiosSecure()
-    const {data : isPremium,isPending:isPremiumLoading = []}=useQuery({
+    const {data : isPremium,isLoading:isPremiumLoading = []}=useQuery({
         queryKey:[user?.email,'premium'],
         queryFn: async()=>{
             const res =await axiosSecure.get(`/users/premium/${user.email}`)
