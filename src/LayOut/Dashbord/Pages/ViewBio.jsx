@@ -6,7 +6,6 @@ import Taitle from "../../../SmallComponent/Taitle";
 
 const ViewBio = () => {
     const [,currentUserBio] = useCurrentBio()
-    console.log(currentUserBio[0])
     const user = currentUserBio[0]
     const { name, biodataId, biodataType, profileImage, permanentDivision, presentDivision, age, dob, height, weight, race, fathersName, mothersName, occupation, expectedPartnerAge, expectedPartnerHeight, expectedPartnerWeight, contactEmail, mobileNumber } = user || {}
 
@@ -30,7 +29,7 @@ const ViewBio = () => {
                     >
                     </Taitle>
                     <section
-                        className="w-full mx-auto max-w-[430px] relative bg-[#231f39]/60 rounded-[6px] shadow-[0px_15px_39px_16px_rgba(52,45,91,0.65)] backdrop-blur-sm mx-2 overflow-hidden">
+                        className="w-full mx-auto max-w-[430px] relative bg-[#231f39]/60 rounded-[6px] shadow-[0px_15px_39px_16px_rgba(52,45,91,0.65)] backdrop-blur-sm overflow-hidden">
 
 
                         <img src={profileImage} className="rounded-full w-[250px] mx-auto my-10 p-0 border-[6px] box-content border-[#231f39] shadow-[0px_27px_16px_-11px_rgba(31,27,56,0.25)] transition-all duration-150 ease-in hover:scale-105 cursor-pointer slide-in-elliptic-top-fwd" />

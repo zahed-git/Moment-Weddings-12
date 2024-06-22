@@ -8,6 +8,7 @@ import Taitle from "../../../SmallComponent/Taitle";
 const Admin = () => {
     const [clients] = useClient()
     const [biodata] = useBiodata()
+    console.log(biodata)
     const [married] = useMarried()
     const boys = biodata.filter(people => people.biodataType === "Male")
     const girls = biodata.filter(people => people.biodataType === "Female")

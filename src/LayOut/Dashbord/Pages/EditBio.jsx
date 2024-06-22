@@ -8,32 +8,36 @@ import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import useAuth from "../../../Hooks/useAuth";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
 
 const EditBio = () => {
+    const [refetch, currentUserBio] = useCurrentBio()
+    const cUser = currentUserBio[0]
+    const { _id, name, biodataId, biodataType, profileImage, permanentDivision, presentDivision, age, dob, height, weight, race, fathersName, mothersName, occupation, expectedPartnerAge, expectedPartnerHeight, expectedPartnerWeight, contactEmail, mobileNumber } = cUser || {}
+    console.log(age)
     const [startDate, setStartDate] = useState(new Date());
     const dateStr = startDate.toString();
     const extractedDate = dateStr?.slice(4, 15);
-
-    const [ft, setFt] = useState()
-    const [inch, setIn] = useState()
-    const [wegt, setWeight] = useState()
-    const [pWeight, setPWeight] = useState()
-    const [pAge, setPAge] = useState()
-    const [pHeight, setPHeight] = useState()
+    const { user } = useAuth()
+    const [ft, setFt] = useState('5')
+    const [inch, setIn] = useState('5')
+    const [wegt, setWeight] = useState('60')
+    const [pWeight, setPWeight] = useState('60')
+    const [pAge, setPAge] = useState('33')
+    const [pHeight, setPHeight] = useState(expectedPartnerHeight)
+    const [photo, setPhoto] = useState('')
     const heightVal = `${ft}'${inch}"`
 
-    console.log(image_hosting_api)
-    const [refetch, currentUserBio] = useCurrentBio()
-    const cUser = currentUserBio[0]
 
-    const { _id, name, biodataId, biodataType, profileImage, permanentDivision, presentDivision, age, dob, height, weight, race, fathersName, mothersName, occupation, expectedPartnerAge, expectedPartnerHeight, expectedPartnerWeight, contactEmail, mobileNumber } = cUser || {}
+
 
     const axiosPublic = useAxiosPublic()
 
     const handleFeet = (event) => {
+        console.log(Number(event.target.value))
         setFt(Number(event.target.value));
     };
     const handleInch = (event) => {
@@ -57,76 +61,93 @@ const EditBio = () => {
         register,
         handleSubmit,
     } = useForm();
-    const onSubmit = async (data) => {
+    const onSubmit =  (data) => {
+        setTimeout(async() => {
+            const name1 = data.name;
+            const biodataType1 = data.biodataType
+            const permanentDivision1 = data.permanentDivision
+            const presentDivision1 = data.presentDivision
+            const age1 = data.age
+            const dob1 = extractedDate
+            const height1 = heightVal
+            const weight1 = wegt
+            const race1 = data.race
+            const fathersName1 = data.father
+            const mothersName1 = data.mother
+            const occupatio1 = data.occupation
+            const expectedPartnerAge1 = pAge
+            const expectedPartnerHeight1 = pHeight
+            const expectedPartnerWeight1 = pWeight
+            const contactEmail1 = contactEmail
+            const mobileNumber1 = data.mobile
+            const imageFile = { image: data.photo[0] };
+            console.log(imageFile.image)
+            if (imageFile.image !== undefined) {
+                console.log(imageFile.image)
+                const res = await axiosPublic.post(image_hosting_api, imageFile, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
 
-        const name = data.name;
-        const biodataType = data.biodataType
-        const permanentDivision = data.permanentDivision
-        const presentDivision = data.presentDivision
-        const age = data.age
-        const dob = extractedDate
-        const height = heightVal
-        const weight = wegt
-        const race = data.race
-        const fathersName = data.fathersName
-        const mothersName = data.mothersName
-        const occupation = data.occupation
-        const expectedPartnerAge = pAge
-        const expectedPartnerHeight = pHeight
-        const expectedPartnerWeight = pWeight
-        const contactEmail = data.contactEmail
-        const mobileNumber = data.mobileNumber
-        const imageFile = { image: data.photo[0] };
-
-        const res = await axiosPublic.post(image_hosting_api, imageFile, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
+                })
+                const imgBBphoto = res.data.data.display_url
+                console.log(imgBBphoto)
+                setPhoto(imgBBphoto)
+            }
+            else {
+                setPhoto(profileImage)
             }
 
-        })
 
 
-        const photo = res.data.data.display_url
-        console.log(photo)
-        const userInfo = {
-            name: name,
-            profileImage: photo,
-            biodataType: biodataType,
-            permanentDivision: permanentDivision,
-            presentDivision: presentDivision,
-            age: age,
-            dob: dob,
-            height: height,
-            weight: weight,
-            race: race,
-            fathersName: fathersName,
-            mothersName: mothersName,
-            occupation: occupation,
-            expectedPartnerAge: expectedPartnerAge,
-            expectedPartnerHeight: expectedPartnerHeight,
-            expectedPartnerWeight: expectedPartnerWeight,
-            contactEmail: contactEmail,
-            mobileNumber: mobileNumber,
-        }
-        console.log(userInfo)
-        axiosPublic.put(`/biodata/${_id}`, userInfo)
-            .then(res => {
-                refetch()
-                console.log("axios put", res.data)
-                if (res.data.modifiedCount) {
-                    Swal.fire({
-                        position: "center",
-                        icon: "success",
-                        title: "Successfully Updated",
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+
+
+            setTimeout(() => {
+                const userInfo = {
+                    name: name1 ? name1 : name1,
+                    profileImage: photo,
+                    biodataType: biodataType1 ? biodataType1 : biodataType,
+                    permanentDivision: permanentDivision1 ? permanentDivision1 : permanentDivision,
+                    presentDivision: presentDivision1 ? presentDivision1 : presentDivision,
+                    age: age1 ? age1 : age,
+                    dob: dob1 ? dob1 : dob,
+                    height: height1 ? height1 : height,
+                    weight: weight1 ? weight1 : weight,
+                    race: race1 ? race1 : race,
+                    fathersName: fathersName1 ? fathersName1 : fathersName,
+                    mothersName: mothersName1 ? mothersName1 : mothersName,
+                    occupation: occupatio1 ? occupatio1 : occupation,
+                    expectedPartnerAge: expectedPartnerAge1 ? expectedPartnerAge1 : expectedPartnerAge,
+                    expectedPartnerHeight: expectedPartnerHeight1 ? expectedPartnerHeight1 : expectedPartnerHeight,
+                    expectedPartnerWeight: expectedPartnerWeight1 ? expectedPartnerWeight1 : expectedPartnerWeight,
+                    contactEmail: contactEmail1 ? contactEmail1 : contactEmail,
+                    mobileNumber: mobileNumber1 ? mobileNumber1 : mobileNumber
                 }
+                console.log(userInfo)
+                setTimeout(() => {
+                    axiosPublic.put(`/biodata/${_id}`, userInfo)
+                        .then(res => {
+                            refetch()
+                            console.log("axios put", res.data)
+                            if (res.data.modifiedCount) {
+                                Swal.fire({
+                                    position: "center",
+                                    icon: "success",
+                                    title: "Successfully Updated",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            }
 
-            })
-            .catch(err => {
-                console.log(err.message)
-            })
+                        })
+                        .catch(err => {
+                            console.log(err.message)
+                        })
+                }, 30);
+
+            }, 50);
+        }, 100);
+
     }
     return (
         <div>
@@ -147,7 +168,7 @@ const EditBio = () => {
                         <div className=" ">
                             <div className="text-center">
 
-                                <img src={profileImage} className="rounded-full w-[250px] mx-auto my-5 p-0 border-[6px] box-content border-[#231f39] shadow-[0px_27px_16px_-11px_rgba(31,27,56,0.25)] transition-all duration-150 ease-in hover:scale-105 cursor-pointer slide-in-elliptic-top-fwd" />
+                                <img src={profileImage} {...register("profileImage")} className="rounded-full w-[250px] mx-auto my-5 p-0 border-[6px] box-content border-[#231f39] shadow-[0px_27px_16px_-11px_rgba(31,27,56,0.25)] transition-all duration-150 ease-in hover:scale-105 cursor-pointer slide-in-elliptic-top-fwd" />
                                 <h2 className="block my-1 text-center">Bio-Data Id : {biodataId}</h2>
                                 <div className="max-w-sm mx-auto">
                                     <label htmlFor="photobutton" className="text-xs font-medium text-gray-500">Update Your Photo :</label>
@@ -199,15 +220,25 @@ const EditBio = () => {
                                             </select>
                                         </h1>
                                         <h1 className=""><h1 className="text-xl font-bold">Date Of Birth :</h1>
-                                            {/* <input {...register("dob")} defaultValue={dob} type="text" name="" id="" className="rounded bg-blue-gray-500 p-1 text-center" /> */}
                                             <DatePicker {...register("dob")} selected={startDate} onChange={(date) => setStartDate(date)} className="rounded bg-blue-gray-500 p-1 text-center" />
                                         </h1>
-                                        <h1 className=""><h1 className="text-xl font-bold">Father:</h1><input {...register("fathersName")} defaultValue={fathersName} type="text" name="" id="" className="rounded bg-blue-gray-500 p-1 text-center" /></h1>
-                                        <h1 className=""><h1 className="text-xl font-bold">Mother :</h1><input {...register("mothersName")} defaultValue={mothersName} type="text" name="" id="" className="rounded bg-blue-gray-500 p-1 text-center" /></h1>
-                                        <h1 className=""><h1 className="text-xl font-bold">Present Division :</h1><input {...register("presentDivision")} defaultValue={presentDivision} type="text" name="" id="" className="rounded bg-blue-gray-500 p-1 text-center" /></h1>
+                                        <h1 className=""><h1 className="text-xl font-bold">Father:</h1><input {...register("father")} defaultValue={fathersName} type="text" name="father" id="" className="rounded bg-blue-gray-500 p-1 text-center" /></h1>
+                                        <h1 className=""><h1 className="text-xl font-bold">Mother :</h1><input {...register("mother")} defaultValue={mothersName} type="text" name="mother" id="" className="rounded bg-blue-gray-500 p-1 text-center" /></h1>
+                                        <h1 className=""><h1 className="text-xl font-bold">Present Division :</h1>
+                                            <select {...register("presentDivision")} className="rounded bg-blue-gray-500 p-1 text-center">
+
+                                                <option value="Dhaka">Dhaka</option>
+                                                <option value="Chittagong">Chittagong</option>
+                                                <option value="Rangpur">Rangpur</option>
+                                                <option value="Shylet">Shylet</option>
+                                                <option value="Maymansign">Maymansign</option>
+                                                <option value="Khulna">Khulna</option>
+                                                <option value="Comilla">Comilla</option>
+                                                <option value="Rajshahi">Rajshahi</option>
+                                            </select>
+                                        </h1>
                                         <h1 className=""><h1 className="text-xl font-bold">Expected partner Height :</h1>
-                                        <input {...register("expectedPartnerHeight")} defaultValue={expectedPartnerHeight} type="text" name="" id="" className="rounded bg-blue-gray-500  p-1 text-center" />
-                                        <label className="flex">
+                                            <label className="flex">
                                                 <select onChange={handlePHeight} className="rounded bg-blue-gray-500 p-1 text-center" >
                                                     {[...Array(530).keys()].map(feet => (
                                                         <option key={feet} value={feet}>{feet}</option>
@@ -255,7 +286,7 @@ const EditBio = () => {
                                             </select>
                                         </h1>
                                         <h1 className=""><h1 className="text-xl font-bold">Weight :</h1>
-                                           <label className="flex">
+                                            <label className="flex">
                                                 <select onChange={handleWeight} className="rounded bg-blue-gray-500 p-1 text-center" >
                                                     {[...Array(530).keys()].map(feet => (
                                                         <option key={feet} value={feet}>{feet}</option>
@@ -266,7 +297,7 @@ const EditBio = () => {
                                             </label>
                                         </h1>
                                         <h1 className=""><h1 className="text-xl font-bold">Expect Partner Age :</h1>
-                                        <label className="flex">
+                                            <label className="flex">
                                                 <select onChange={handlePAge} className="rounded bg-blue-gray-500 p-1 text-center" >
                                                     {[...Array(530).keys()].map(feet => (
                                                         <option key={feet} value={feet}>{feet}</option>
@@ -277,7 +308,7 @@ const EditBio = () => {
                                             </label>
                                         </h1>
                                         <h1 className=""><h1 className="text-xl font-bold">Expect Partner Weight :</h1>
-                                         <label className="flex">
+                                            <label className="flex">
                                                 <select onChange={handlePWeight} className="rounded bg-blue-gray-500 p-1 text-center" >
                                                     {[...Array(530).keys()].map(feet => (
                                                         <option key={feet} value={feet}>{feet}</option>
@@ -310,8 +341,8 @@ const EditBio = () => {
 
                                 <h2 className="text-xl font-bold text-center">Contact info</h2>
                                 <div className="   mx-auto my-5 space-y-2">
-                                    <h1 className=" "> <h2 className="text-2xl font-bold">Mobile :</h2> <input {...register("mobileNumber",{ required: true })} defaultValue={mobileNumber} type="text" name="" id="" className="bg-blue-gray-500 rounded" /></h1>
-                                    <h1 className=" "> <h2 className="text-2xl font-bold">Email :</h2><input {...register("contactEmail")} disabled defaultValue={contactEmail} type="text" name="" id="" className="bg-blue-gray-500 rounded" /></h1>
+                                    <h1 className=" "> <h2 className="text-2xl font-bold">Mobile :</h2> <input {...register("mobile")} defaultValue={mobileNumber} type="text" name="" id="" className="bg-blue-gray-500 rounded" /></h1>
+                                    <h1 className=" "> <h2 className="text-2xl font-bold">Email :</h2><input disabled defaultValue={user.email} type="text" name="" id="" className="bg-blue-gray-500 rounded" /></h1>
                                 </div>
 
 
@@ -319,8 +350,10 @@ const EditBio = () => {
                         </div>
 
                         <div className="flex items-center justify-center gap-2 w-[80%] mx-auto mt-5 mb-10">
+                            <button type="submit" className=" flex-1 p-3 border  border-[#231f39] rounded-[4px] py-3 text-white bg-[#231f39] transition-all duration-150 ease-in hover:bg-[#472e99]">Save</button>
+                            {/* <button type="submit" className=" flex-1 p-3 border  border-[#231f39] rounded-[4px] py-3 text-white bg-[#231f39] transition-all duration-150 ease-in hover:bg-[#472e99]">Publish</button> */}
                             <Link to={'/dashbord/viewbio'}><button className="w-full flex-1 px-3 border border-[#231f39] rounded-[4px] py-3 text-white bg-[#231f39] transition-all duration-150 ease-in hover:bg-[#472e99]">View</button></Link>
-                            <button type="submit" className=" flex-1 p-3 border  border-[#231f39] rounded-[4px] py-3 text-white bg-[#231f39] transition-all duration-150 ease-in hover:bg-[#472e99]">Update</button>
+
 
                         </div>
 
