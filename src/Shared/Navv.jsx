@@ -17,7 +17,9 @@ import {
 } from "@material-tailwind/react";
 import {
   CubeTransparentIcon,
+  BuildingLibraryIcon,
   UserCircleIcon,
+  UsersIcon,
   CodeBracketSquareIcon,
   Square3Stack3DIcon,
   ChevronDownIcon,
@@ -175,8 +177,12 @@ const Navv = () => {
           <span className="text-gray-900">Home</span>
         </MenuItem></NavLink>
         <NavLink to='/biodata'><MenuItem className="flex items-center gap-2 lg:rounded-full">
-          {React.createElement(CodeBracketSquareIcon, { className: "h-[18px] w-[18px]" })}{" "}
+          {React.createElement(UsersIcon, { className: "h-[18px] w-[18px]" })}{" "}
           <span className="text-gray-900"> Biodatas</span>
+        </MenuItem></NavLink>
+        <NavLink to='/create'><MenuItem className="flex items-center gap-2 lg:rounded-full">
+          {React.createElement(BuildingLibraryIcon, { className: "h-[18px] w-[18px]" })}{" "}
+          <span className="text-gray-900"> Create Your Biodata</span>
         </MenuItem></NavLink>
         <NavLink to='/about'><MenuItem className="flex items-center gap-2 lg:rounded-full">
           {React.createElement(RocketLaunchIcon, { className: "h-[18px] w-[18px]" })}{" "}

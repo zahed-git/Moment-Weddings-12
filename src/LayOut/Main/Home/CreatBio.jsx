@@ -1,6 +1,5 @@
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import useCurrentBio from "../../../Hooks/useCurrentBio";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import Taitle from "../../../SmallComponent/Taitle";
@@ -13,11 +12,8 @@ import useAuth from "../../../Hooks/useAuth";
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
 
-const EditBio = () => {
-    const [refetch, currentUserBio] = useCurrentBio()
-    const cUser = currentUserBio[0]
-    const { _id, name, biodataId, biodataType, profileImage, permanentDivision, presentDivision, age, dob, height, weight, race, fathersName, mothersName, occupation, expectedPartnerAge, expectedPartnerHeight, expectedPartnerWeight, contactEmail, mobileNumber } = cUser || {}
-    console.log(age)
+const CreatBio = () => {
+   
     const [startDate, setStartDate] = useState(new Date());
     const dateStr = startDate.toString();
     const extractedDate = dateStr?.slice(4, 15);
@@ -27,7 +23,7 @@ const EditBio = () => {
     const [wegt, setWeight] = useState(60)
     const [pWeight, setPWeight] = useState(60)
     const [pAge, setPAge] = useState(33)
-    const [pHeight, setPHeight] = useState(expectedPartnerHeight)
+    const [pHeight, setPHeight] = useState()
     const [photo, setPhoto] = useState('')
     const heightVal = `${ft}'${inch}"`
 
@@ -59,44 +55,46 @@ const EditBio = () => {
 
     const {
         register,
+        reset,
         handleSubmit,
+        formState: { errors }
     } = useForm();
-    const onSubmit =  (data) => {
-        setTimeout(async() => {
-            const name1 = data.name;
-            const biodataType1 = data.biodataType
-            const permanentDivision1 = data.permanentDivision
-            const presentDivision1 = data.presentDivision
-            const age1 = data.age
-            const dob1 = extractedDate
-            const height1 = heightVal
-            const weight1 = wegt
-            const race1 = data.race
-            const fathersName1 = data.father
-            const mothersName1 = data.mother
-            const occupatio1 = data.occupation
-            const expectedPartnerAge1 = pAge
-            const expectedPartnerHeight1 = pHeight
-            const expectedPartnerWeight1 = pWeight
-            const contactEmail1 = contactEmail
-            const mobileNumber1 = data.mobile
+    const onSubmit = (data) => {
+        setTimeout(async () => {
+            const name = data.name;
+            const biodataType = data.biodataType
+            const permanentDivision = data.permanentDivision
+            const presentDivision = data.presentDivision
+            const age= data.age
+            const dob = extractedDate
+            const height = heightVal
+            const weight = wegt
+            const race = data.race
+            const fathersName = data.father
+            const mothersName = data.mother
+            const occupation = data.occupation
+            const expectedPartnerAge = pAge
+            const expectedPartnerHeight = pHeight
+            const expectedPartnerWeight = pWeight
+            const contactEmail = user.email
+            const mobileNumber = data.mobile
             const imageFile = { image: data.photo[0] };
             console.log(imageFile.image)
-            if (imageFile.image !== undefined) {
-                console.log(imageFile.image)
-                const res = await axiosPublic.post(image_hosting_api, imageFile, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
+            // if (imageFile.image !== undefined) {
+            //     console.log(imageFile.image)
+            //     const res = await axiosPublic.post(image_hosting_api, imageFile, {
+            //         headers: {
+            //             'Content-Type': 'multipart/form-data'
+            //         }
 
-                })
-                const imgBBphoto = res.data.data.display_url
-                console.log(imgBBphoto)
-                setPhoto(imgBBphoto)
-            }
-            else {
-                setPhoto(profileImage)
-            }
+            //     })
+            //     const imgBBphoto = res.data.data.display_url
+            //     console.log(imgBBphoto)
+            //     setPhoto(imgBBphoto)
+            // }
+            // else {
+            //     setPhoto(profileImage)
+            // }
 
 
 
@@ -104,46 +102,47 @@ const EditBio = () => {
 
             setTimeout(() => {
                 const userInfo = {
-                    name: name1 ? name1 : name1,
+                    name: name,
                     profileImage: photo,
-                    biodataType: biodataType1 ? biodataType1 : biodataType,
-                    permanentDivision: permanentDivision1 ? permanentDivision1 : permanentDivision,
-                    presentDivision: presentDivision1 ? presentDivision1 : presentDivision,
-                    age: age1 ? age1 : age,
-                    dob: dob1 ? dob1 : dob,
-                    height: height1 ? height1 : height,
-                    weight: weight1 ? weight1 : weight,
-                    race: race1 ? race1 : race,
-                    fathersName: fathersName1 ? fathersName1 : fathersName,
-                    mothersName: mothersName1 ? mothersName1 : mothersName,
-                    occupation: occupatio1 ? occupatio1 : occupation,
-                    expectedPartnerAge: expectedPartnerAge1 ? expectedPartnerAge1 : expectedPartnerAge,
-                    expectedPartnerHeight: expectedPartnerHeight1 ? expectedPartnerHeight1 : expectedPartnerHeight,
-                    expectedPartnerWeight: expectedPartnerWeight1 ? expectedPartnerWeight1 : expectedPartnerWeight,
-                    contactEmail: contactEmail1 ? contactEmail1 : contactEmail,
-                    mobileNumber: mobileNumber1 ? mobileNumber1 : mobileNumber
+                    biodataType: biodataType,
+                    permanentDivision: permanentDivision,
+                    presentDivision: presentDivision,
+                    age: age,
+                    dob: dob,
+                    height: height,
+                    weight: weight,
+                    race: race,
+                    fathersName: fathersName,
+                    mothersName: mothersName,
+                    occupation: occupation,
+                    expectedPartnerAge: expectedPartnerAge,
+                    expectedPartnerHeight: expectedPartnerHeight,
+                    expectedPartnerWeight: expectedPartnerWeight,
+                    contactEmail: contactEmail,
+                    mobileNumber: mobileNumber
                 }
                 console.log(userInfo)
-                setTimeout(() => {
-                    axiosPublic.put(`/biodata/${_id}`, userInfo)
-                        .then(res => {
-                            refetch()
-                            console.log("axios put", res.data)
-                            if (res.data.modifiedCount) {
-                                Swal.fire({
-                                    position: "center",
-                                    icon: "success",
-                                    title: "Successfully Updated",
-                                    showConfirmButton: false,
-                                    timer: 1500
-                                });
-                            }
+                // setTimeout(() => {
+                //     axiosPublic.post('/biodata}', userInfo)
+                //         .then(res => {
+                //            
+                //             console.log("axios post", res.data)
+                //             if (res.data.insertedDataCount) {
+                    //             reset()
+                //                 Swal.fire({
+                //                     position: "center",
+                //                     icon: "success",
+                //                     title: "Successfully Created",
+                //                     showConfirmButton: false,
+                //                     timer: 1500
+                //                 });
+                //             }
 
-                        })
-                        .catch(err => {
-                            console.log(err.message)
-                        })
-                }, 30);
+                //         })
+                //         .catch(err => {
+                //             console.log(err.message)
+                //         })
+                // }, 30);
 
             }, 50);
         }, 100);
@@ -152,36 +151,35 @@ const EditBio = () => {
     return (
         <div>
             <Helmet>
-                <title>Moment||dashboard||Edi-Bio</title>
+                <title>Moment||about</title>
             </Helmet>
-            <div className="p-10 w-full bg-[url(https://neluttu.github.io/pro-profile/wallpaper.jpg)] bg-[#292240]">
-                <h1 className="text-blue">.</h1>
-                <div
-                    className=" bg-[url(https://neluttu.github.io/pro-profile/wallpaper.jpg)] bg-[#292240]   text-[#9e9cb6]">
-                    <Taitle
-                        heading={"Edit Your Bio-Data"}
-                    >
-                    </Taitle>
-                    <form
+            <h1>.</h1>
+            <div className=" mt-10">
+                <Taitle
+                    heading={"create your Your Bio-Data"}
+
+                >
+                </Taitle>
+                <form
                         onSubmit={handleSubmit(onSubmit)}
                         className="w-full  relative bg-[#231f39]/60 rounded-[6px] shadow-[0px_15px_39px_16px_rgba(52,45,91,0.65)] backdrop-blur-sm mx-2 overflow-hidden  ">
                         <div className=" ">
                             <div className="text-center">
-
-                                <img src={profileImage} {...register("profileImage")} className="rounded-full w-[250px] mx-auto my-5 p-0 border-[6px] box-content border-[#231f39] shadow-[0px_27px_16px_-11px_rgba(31,27,56,0.25)] transition-all duration-150 ease-in hover:scale-105 cursor-pointer slide-in-elliptic-top-fwd" />
-                                <h2 className="block my-1 text-center">Bio-Data Id : {biodataId}</h2>
+                                 <h2 className="block my-1 text-center">Bio-Data Id : </h2>
                                 <div className="max-w-sm mx-auto">
                                     <label htmlFor="photobutton" className="text-xs font-medium text-gray-500">Update Your Photo :</label>
                                     <div className="relative z-0 mt-0.5 flex w-full -space-x-px">
-                                        <input {...register("photo")} id="photobutton" type="file" className="block w-full cursor-pointer appearance-none rounded-l-md border border-gray-200 bg-white px-3 py-2 text-sm transition focus:z-10 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:opacity-75" />
-
+                                        <input {...register("photo",{ required: true })} id="photobutton" type="file" className="block w-full cursor-pointer appearance-none rounded-l-md border border-gray-200 bg-white px-3 py-2 text-sm transition focus:z-10 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:opacity-75" />
+                                        {errors.photo && <span>PLS select a Photo</span>}
                                     </div>
                                 </div>
 
-                                <h1 className=""><h1 className="text-xl font-bold">Name :</h1><input {...register("name")} defaultValue={name} type="text" name="name" id="" className="rounded bg-blue-gray-500 p-1 text-center" /></h1>
+                               
+                                <h1 className=""><h1 className="text-xl font-bold">Name :</h1><input {...register("name",{ required: true })}  type="text" name="name" id="" className="rounded bg-blue-gray-500 p-1 text-center" /></h1>
+                                {errors.name && <span>PLS give a Photo-URL</span>}
                                 <h1 className=""><h1 className="text-xl font-bold">Permanent Division :</h1>
 
-                                    <select {...register("permanentDivision")} className="rounded bg-blue-gray-500 p-1 text-center">
+                                    <select {...register("permanentDivision",{ required: true })} className="rounded bg-blue-gray-500 p-1 text-center">
 
                                         <option value="Dhaka">Dhaka</option>
                                         <option value="Chittagong">Chittagong</option>
@@ -193,9 +191,10 @@ const EditBio = () => {
                                         <option value="Rajshahi">Rajshahi</option>
                                     </select>
                                 </h1>
+                                {errors.permanentDivision && <span>PLS select any</span>}
                                 <h1 className=""><h1 className="text-xl font-bold">Occupation :</h1>
 
-                                    <select {...register("occupation")} className="rounded bg-blue-gray-500 p-1 text-center">
+                                    <select {...register("occupation",{ required: true })} className="rounded bg-blue-gray-500 p-1 text-center">
                                         <option value="Doctor">Doctor</option>
                                         <option value="Student">Student</option>
                                         <option value="Nurse">Nurse</option>
@@ -204,6 +203,7 @@ const EditBio = () => {
                                         <option value="Job Holder">Job Holder</option>
                                     </select>
                                 </h1>
+                                {errors.occupation && <span>PLS select any</span>}
 
                                 <p className="mt-5 text-center"></p>
                             </div>
@@ -214,18 +214,21 @@ const EditBio = () => {
                                         <h1 className="">
                                             <h1 className="text-xl font-bold">
                                                 Type :</h1>
-                                            <select {...register("biodataType")} className="rounded bg-blue-gray-500 p-1 text-center">
+                                            <select {...register("biodataType",{ required: true })} className="rounded bg-blue-gray-500 p-1 text-center">
                                                 <option value="Male">Male</option>
                                                 <option value="Female">Female</option>
                                             </select>
                                         </h1>
+                                        {errors.biodataType && <span>PLS select any</span>}
                                         <h1 className=""><h1 className="text-xl font-bold">Date Of Birth :</h1>
-                                            <DatePicker {...register("dob")} selected={startDate} onChange={(date) => setStartDate(date)} className="rounded bg-blue-gray-500 p-1 text-center" />
+                                            <DatePicker required selected={startDate} onChange={(date) => setStartDate(date)} className="rounded bg-blue-gray-500 p-1 text-center" />
                                         </h1>
-                                        <h1 className=""><h1 className="text-xl font-bold">Father:</h1><input {...register("father")} defaultValue={fathersName} type="text" name="father" id="" className="rounded bg-blue-gray-500 p-1 text-center" /></h1>
-                                        <h1 className=""><h1 className="text-xl font-bold">Mother :</h1><input {...register("mother")} defaultValue={mothersName} type="text" name="mother" id="" className="rounded bg-blue-gray-500 p-1 text-center" /></h1>
+                                        <h1 className=""><h1 className="text-xl font-bold">Father:</h1><input {...register("father",{ required: true })}  type="text" name="father" id="" className="rounded bg-blue-gray-500 p-1 text-center" /></h1>
+                                        {errors.father && <span>PLS fill up the field</span>}
+                                        <h1 className=""><h1 className="text-xl font-bold">Mother :</h1><input {...register("mother",{ required: true })}  type="text" name="mother" id="" className="rounded bg-blue-gray-500 p-1 text-center" /></h1>
+                                        {errors.mother && <span>PLS fill up the field</span>}
                                         <h1 className=""><h1 className="text-xl font-bold">Present Division :</h1>
-                                            <select {...register("presentDivision")} className="rounded bg-blue-gray-500 p-1 text-center">
+                                            <select {...register("presentDivision",{ required: true })} className="rounded bg-blue-gray-500 p-1 text-center">
 
                                                 <option value="Dhaka">Dhaka</option>
                                                 <option value="Chittagong">Chittagong</option>
@@ -237,6 +240,7 @@ const EditBio = () => {
                                                 <option value="Rajshahi">Rajshahi</option>
                                             </select>
                                         </h1>
+                                        {errors.presentDivision && <span>PLS select any</span>}
                                         <h1 className=""><h1 className="text-xl font-bold">Expected partner Height :</h1>
                                             <label className="flex">
                                                 <select onChange={handlePHeight} className="rounded bg-blue-gray-500 p-1 text-center" >
@@ -253,8 +257,9 @@ const EditBio = () => {
                                     </div>
                                     <div className=" px-2 space-y-6">
                                         <h1 className=""><h1 className="text-xl font-bold">Age :</h1>
-                                            <input {...register("age")} defaultValue={age} type="text" name="" id="" className="rounded bg-blue-gray-500 p-1 text-center" />
+                                            <input {...register("age",{ required: true })} type="text" name="" id="" className="rounded bg-blue-gray-500 p-1 text-center" />
                                         </h1>
+                                        {errors.age && <span>give your age</span>}
                                         <h1 className=""><h1 className="text-xl font-bold">Height :</h1>
                                             <div className="flex gap-2">
                                                 <label className="flex">
@@ -279,12 +284,13 @@ const EditBio = () => {
 
                                         </h1>
                                         <h1 className=""><h1 className="text-xl font-bold">Race :</h1>
-                                            <select {...register("race")} className="rounded bg-blue-gray-500 p-1 text-center">
+                                            <select {...register("race",{ required: true })} className="rounded bg-blue-gray-500 p-1 text-center">
                                                 <option value="Asian">Asian</option>
                                                 <option value="African">African</option>
                                                 <option value="European">Euopian</option>
                                             </select>
                                         </h1>
+                                        {errors.race && <span>PLS select any</span>}
                                         <h1 className=""><h1 className="text-xl font-bold">Weight :</h1>
                                             <label className="flex">
                                                 <select onChange={handleWeight} className="rounded bg-blue-gray-500 p-1 text-center" >
@@ -296,7 +302,7 @@ const EditBio = () => {
                                                 <h1 className="text-xl font-bold">Kg</h1>
                                             </label>
                                         </h1>
-                                        <h1 className=""><h1 className="text-xl font-bold">Expect Partner Age :</h1>
+                                        <h1 className=""><h1 className="text-xl font-bold">Expected Partner Age :</h1>
                                             <label className="flex">
                                                 <select onChange={handlePAge} className="rounded bg-blue-gray-500 p-1 text-center" >
                                                     {[...Array(530).keys()].map(feet => (
@@ -341,8 +347,8 @@ const EditBio = () => {
 
                                 <h2 className="text-xl font-bold text-center">Contact info</h2>
                                 <div className="   mx-auto my-5 space-y-2">
-                                    <h1 className=" "> <h2 className="text-2xl font-bold">Mobile :</h2> <input {...register("mobile")} defaultValue={mobileNumber} type="text" name="" id="" className="bg-blue-gray-500 rounded" /></h1>
-                                    <h1 className=" "> <h2 className="text-2xl font-bold">Email :</h2><input disabled defaultValue={user.email} type="text" name="" id="" className="bg-blue-gray-500 rounded" /></h1>
+                                    <h1 className=" "> <h2 className="text-2xl font-bold">Mobile :</h2> <input {...register("mobile",{ required: true })}  type="text" name="mobile" id="" className="bg-blue-gray-500 rounded" /></h1>
+                                    <h1 className=" "> <h2 className="text-2xl font-bold">Email :</h2><input disabled defaultValue={user?.email} type="text" name="email" id="" className="bg-blue-gray-500 rounded" /></h1>
                                 </div>
 
 
@@ -358,16 +364,10 @@ const EditBio = () => {
                         </div>
 
                     </form>
-
-                    {/* --------------------------------------------- */}
-
-
-                </div>
-
-
             </div>
+
         </div>
     );
 };
 
-export default EditBio;
+export default CreatBio;

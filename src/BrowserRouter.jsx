@@ -23,6 +23,7 @@ import ShowConReq from "./LayOut/Dashbord/Pages/ShowConReq";
 import D_Home from "./LayOut/Dashbord/Pages/D_Home";
 import About from "./LayOut/Main/Home/About";
 import Contact from "./LayOut/Main/Home/Contact";
+import CreatBio from "./LayOut/Main/Home/CreatBio";
 
 
     export   const router = createBrowserRouter([
@@ -34,6 +35,10 @@ import Contact from "./LayOut/Main/Home/Contact";
               {
                   path: '/',
                   element: <Home></Home>
+              },
+              {
+                  path: 'create',
+                  element:<PrivateRout><CreatBio></CreatBio></PrivateRout> 
               },
              
               {
