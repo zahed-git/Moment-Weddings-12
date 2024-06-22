@@ -14,6 +14,11 @@ const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_ke
 
 const EditBio = () => {
     const [startDate, setStartDate] = useState(new Date());
+    const dateStr = startDate.toString();
+    const extractedDate = dateStr?.slice(4, 15);
+
+
+
     console.log(image_hosting_api)
     const [refetch, currentUserBio] = useCurrentBio()
     const user = currentUserBio[0]
@@ -31,7 +36,7 @@ const EditBio = () => {
         const permanentDivision = data.permanentDivision
         const presentDivision = data.presentDivision
         const age = data.age
-        const dob = startDate
+        const dob = extractedDate
         const height = data.height
         const weight = data.weight
         const race = data.race
@@ -44,7 +49,7 @@ const EditBio = () => {
         const contactEmail = data.contactEmail
         const mobileNumber = data.mobileNumber
         const imageFile = { image: data.photo[0] };
-        console.log(dob)
+        console.log(typeof dob)
 
         // const res = await axiosPublic.post(image_hosting_api, imageFile, {
         //     headers: {
@@ -168,7 +173,7 @@ const EditBio = () => {
                                         </h1>
                                         <h1 className=""><h1 className="text-xl font-bold">Date Of Birth :</h1>
                                             {/* <input {...register("dob")} defaultValue={dob} type="text" name="" id="" className="rounded bg-blue-gray-500 p-1 text-center" /> */}
-                                            <DatePicker {...register("dob")} selected={startDate} onChange={(date) => setStartDate(date)} className="rounded bg-blue-gray-500 p-1 text-center"/>
+                                            <DatePicker {...register("dob")} selected={startDate} onChange={(date) => setStartDate(date)} className="rounded bg-blue-gray-500 p-1 text-center" />
                                         </h1>
                                         <h1 className=""><h1 className="text-xl font-bold">Father:</h1><input {...register("fathersName")} defaultValue={fathersName} type="text" name="" id="" className="rounded bg-blue-gray-500 p-1 text-center" /></h1>
                                         <h1 className=""><h1 className="text-xl font-bold">Mother :</h1><input {...register("mothersName")} defaultValue={mothersName} type="text" name="" id="" className="rounded bg-blue-gray-500 p-1 text-center" /></h1>
