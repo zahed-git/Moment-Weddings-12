@@ -108,12 +108,7 @@ const Stats = () => {
                 </div>
 
             </div>
-            {isAdmin?
-            <>
-            <Charts boys={boys} girls={girls}></Charts>
-            </>:<></>
-
-            }
+           
         </div>
     );
 };

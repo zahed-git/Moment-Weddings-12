@@ -10,15 +10,15 @@ import Charts from "./Charts";
 
 const Admin = () => {
     return (
-        <div className="mt-10">
+        <div className="mt-10 text-gray-800 p-10 bg-gray-200 space-y-11">
             <Helmet>
                 <title>Moment||dashboard||Admin</title>
             </Helmet>
             {/* --------------------------------------------------- */}
            
-                  {
+                
                     <Stats  ></Stats>
-                  }
+                 <Charts></Charts>
            
         </div>
     );

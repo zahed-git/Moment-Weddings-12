@@ -9,7 +9,6 @@ import useBiodata from '../../../Hooks/useBiodata';
 
 
 const CheckoutForm = ({ biodataId }) => {
-  console.log(biodataId)
   const { user } = useAuth()
   const [error, setError] = useState()
   const stripe = useStripe();
@@ -24,8 +23,7 @@ const CheckoutForm = ({ biodataId }) => {
   const from = location.state?.from?.pathname || '/biodata'
   const [biodata]=useBiodata()
   const infoFor=biodata?.find(bio=>bio.biodataId===biodataId)
-  console.log(biodata)
-  console.log(infoFor)
+
 
   useEffect(() => {
     axiosSecure.post('/create-payment-intent', { price: totalPrice })

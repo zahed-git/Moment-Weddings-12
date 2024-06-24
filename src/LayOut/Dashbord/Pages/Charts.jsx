@@ -1,8 +1,12 @@
 
 import { PieChart, Pie, Sector, Cell, Tooltip, Legend} from 'recharts';
 import useStatus from '../../../Hooks/useStatus';
+import useBiodata from '../../../Hooks/useBiodata';
 
-const Charts = ({boys,girls}) => {
+const Charts = () => {
+  const [biodata] = useBiodata()
+    const boys = biodata.filter(people => people.biodataType === "Male")
+    const girls = biodata.filter(people => people.biodataType === "Female")
   const [stats] = useStatus()
   const total = stats.result
   const marred = stats.marred

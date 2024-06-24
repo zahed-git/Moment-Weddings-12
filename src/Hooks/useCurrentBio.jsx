@@ -5,9 +5,11 @@ import useAuth from "./useAuth";
 const useCurrentBio = () => {
     const {user}=useAuth()
     const email=user.email
+    
     const axiosSecure=useAxiosSecure()
     const {refetch,data:currentUserBio = []}=useQuery({
         queryKey:[`/biodata/${email}`],
+        enabled:!!email,
         queryFn: async()=>{
             const res= await axiosSecure.get(`/biodata/${email}`)
             return res.data

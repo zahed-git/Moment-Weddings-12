@@ -42,7 +42,7 @@ const Navv = () => {
   const [isNavOpen, setIsNavOpen] = React.useState(false);
   const handleLogOut = () => {
     logOut()
-      .then(() => {
+      
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -50,8 +50,7 @@ const Navv = () => {
           showConfirmButton: false,
           timer: 1500
         });
-      })
-      .catch(error => console.log(error))
+      
   }
 
   // profile menu component

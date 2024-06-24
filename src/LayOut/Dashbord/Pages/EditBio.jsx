@@ -4,11 +4,11 @@ import useCurrentBio from "../../../Hooks/useCurrentBio";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import Taitle from "../../../SmallComponent/Taitle";
-import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import useAuth from "../../../Hooks/useAuth";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
@@ -34,7 +34,7 @@ const EditBio = () => {
 
 
 
-    const axiosPublic = useAxiosPublic()
+    const axiosSecure = useAxiosSecure()
 
     const handleFeet = (event) => {
         console.log(Number(event.target.value))
@@ -84,7 +84,7 @@ const EditBio = () => {
             console.log(imageFile.image)
             if (imageFile.image !== undefined) {
                 console.log(imageFile.image)
-                const res = await axiosPublic.post(image_hosting_api, imageFile, {
+                const res = await axiosSecure.post(image_hosting_api, imageFile, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
@@ -125,7 +125,7 @@ const EditBio = () => {
                 }
                 console.log(userInfo)
                 setTimeout(() => {
-                    axiosPublic.put(`/biodata/${_id}`, userInfo)
+                    axiosSecure.put(`/biodata/${_id}`, userInfo)
                         .then(res => {
                             refetch()
                             console.log("axios put", res.data)

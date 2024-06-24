@@ -9,6 +9,7 @@ const useFavList = () => {
     const axiosSecure = useAxiosSecure()
     const { refetch, data: favList = [] } = useQuery({
         queryKey: ['/fav-list'],
+        enabled:!!email,
         queryFn: async () => {
             const res = await axiosSecure.get(`/fav-list/${email}`)
             return res.data

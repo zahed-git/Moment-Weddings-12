@@ -1,3 +1,5 @@
+import useAdmin from "../../../Hooks/useAdmin";
+import useAuth from "../../../Hooks/useAuth";
 import Stats from "../../../Shared/Stats";
 import Banner from "./Banner";
 import HowWorks from "./HowWorks";
@@ -9,6 +11,9 @@ import SucessStory from "./SucessStory";
 import { Helmet } from 'react-helmet-async';
 
 const Home = () => {
+    const {user}=useAuth()
+    const [isAdmin]=useAdmin()
+    console.log(isAdmin,user?.email)
     return (
         <div className="space-y-14">
 

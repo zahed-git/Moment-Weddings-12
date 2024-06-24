@@ -124,7 +124,7 @@ const SignUp = () => {
                                     d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
                                     clipRule="evenodd" />
                             </svg>
-                            <input {...register("password", { required: true, minLength: 6, maxLength: 20, pattern: /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/ })} className="pl-2 outline-none border-none" type="text" name="password" id="" placeholder="Password" required />
+                            <input {...register("password", { required: true, minLength: 6, maxLength: 20, pattern: /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/ })} className="pl-2 outline-none border-none" type="password" name="password" id="" placeholder="Password" required />
                             {errors.password?.type === 'minLength' && <span>password must 6 minimum char</span>}
                             {errors.password?.type === 'maxLength' && <span>password must 20 maximum char</span>}
                             {errors.password?.type === 'pattern' && <span>capital & small letter ,number and special charter needed</span>}

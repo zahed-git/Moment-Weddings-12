@@ -12,8 +12,8 @@ const Login = () => {
     const navigate = useNavigate()
     const from = location.state?.from?.pathname || '/'
     const { signInUser } = useAuth()
-    // const captaRef=useRef()
-    // const [disabled,setDisabled]=useState(true)
+    const captaRef=useRef()
+    const [disabled,setDisabled]=useState(true)
 
 
     // useEffect(()=>{
@@ -48,10 +48,12 @@ const Login = () => {
     // }
     return (
         <div>
+
             <Helmet>
                 <title>Moment||login</title>
             </Helmet>
-            <div className="h-screen flex">
+            <h1 className="text-white">,</h1>
+            <div className="h-screen flex mt-14">
                 <div className="hidden lg:flex w-full lg:w-1/2 login_img_section
           justify-around items-center">
                     <div
@@ -96,11 +98,11 @@ const Login = () => {
                                 </label>
                                 <input ref={captaRef} name="captcha" type="text" placeholder="Type captcha" className="input input-bordered" required />
 
-                                <button onClick={validate} className='btn  btn-sm'> validate</button>
-                            </div> */}
+                                <button  onClick={validate} className='btn  btn-sm'> validate</button>
+                            </div>  */}
                             {/* disabled={disabled} */}
 
-                            <button type="submit" className="block w-full bg-indigo-600 mt-5 py-2 rounded-2xl hover:bg-[#4285F4]/90 hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2">Login</button>
+                            <button  type="submit" className="block w-full bg-indigo-600 mt-5 py-2 rounded-2xl hover:bg-[#4285F4]/90 hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2">Login</button>
                             <SocialLogin></SocialLogin>
 
 
