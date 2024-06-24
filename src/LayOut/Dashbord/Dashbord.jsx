@@ -36,46 +36,47 @@ const Dashbord = () => {
                         </div>
                         <div className="flex flex-col flex-1 overflow-y-auto">
                             <nav className="flex-1 px-2 py-4 bg-gray-800 space-y-3">
-                                {/* {
-                                    isAdmin ? <> */}
-                                <NavLink to='admin' href="#" className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
+                                {
+                                    isAdmin ? <>
+                                        <NavLink to='admin' href="#" className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
 
-                                    Admin Dashbord
-                                </NavLink>
-                                <NavLink to='manageUser' href="#" className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
+                                            Admin Dashbord
+                                        </NavLink>
+                                        <NavLink to='manageUser' href="#" className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
 
-                                    Manage Users
-                                </NavLink>
-                                <NavLink to='approvePremium' href="#" className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
+                                            Manage Users
+                                        </NavLink>
+                                        <NavLink to='approvePremium' href="#" className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
 
-                                    Approved premium
-                                </NavLink>
-                                <NavLink to='approveContactReq' href="#" className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
+                                            Approved premium
+                                        </NavLink>
+                                        <NavLink to='approveContactReq' href="#" className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
 
-                                    Approved Contact Request
-                                </NavLink>
+                                            Approved Contact Request
+                                        </NavLink>
 
 
-                                {/* </> : <> */}
-                                <NavLink to='editbio' href="#" className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
+                                    </> : <>
 
-                                    Edit Bio-Data
-                                </NavLink>
-                                <NavLink to='viewbio' href="#" className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
+                                        <NavLink to='viewbio' href="#" className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
 
-                                    View Bio-Data
-                                </NavLink>
-                                <NavLink to='my-con-req' href="#" className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
+                                            View Bio-Data
+                                        </NavLink>
+                                        <NavLink to='editbio' href="#" className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
 
-                                    My Contact Request
-                                </NavLink>
-                                <NavLink to='my-fav-bio' href="#" className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
+                                            Edit Bio-Data
+                                        </NavLink>
+                                        <NavLink to='my-con-req' href="#" className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
 
-                                    Favourite Bio-Data
-                                </NavLink>
-                                {/* </>
+                                            My Contact Request
+                                        </NavLink>
+                                        <NavLink to='my-fav-bio' href="#" className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700">
 
-                                } */}
+                                            Favourite Bio-Data
+                                        </NavLink>
+                                    </>
+
+                                }
                                 <a href="#" className="flex items-center space-x-2 bg-pink-700 hover:bg-blue-700 text-gray-100 px-4 py-2 rounded transition duration-150" title="Return Home">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                         <path d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" ></path>

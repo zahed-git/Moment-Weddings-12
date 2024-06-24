@@ -8,12 +8,14 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import useAuth from "../../../Hooks/useAuth";
+import useStatus from "../../../Hooks/useStatus";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
 
 const CreatBio = () => {
-   
+   const [refetch,stats]=useStatus()
+   const createId=stats.result+1
     const [startDate, setStartDate] = useState(new Date());
     const dateStr = startDate.toString();
     const extractedDate = dateStr?.slice(4, 15);
@@ -24,9 +26,9 @@ const CreatBio = () => {
     const [pWeight, setPWeight] = useState(60)
     const [pAge, setPAge] = useState(33)
     const [pHeight, setPHeight] = useState()
-    const [photo, setPhoto] = useState('')
     const heightVal = `${ft}'${inch}"`
-
+    
+    console.log(typeof createId)
 
 
 
@@ -60,7 +62,7 @@ const CreatBio = () => {
         formState: { errors }
     } = useForm();
     const onSubmit = (data) => {
-        setTimeout(async () => {
+        setTimeout( async() => {
             const name = data.name;
             const biodataType = data.biodataType
             const permanentDivision = data.permanentDivision
@@ -79,31 +81,26 @@ const CreatBio = () => {
             const contactEmail = user.email
             const mobileNumber = data.mobile
             const imageFile = { image: data.photo[0] };
-            console.log(imageFile.image)
-            // if (imageFile.image !== undefined) {
-            //     console.log(imageFile.image)
-            //     const res = await axiosPublic.post(image_hosting_api, imageFile, {
-            //         headers: {
-            //             'Content-Type': 'multipart/form-data'
-            //         }
+           
+                console.log(imageFile.image)
+                const res =await axiosPublic.post(image_hosting_api, imageFile, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
 
-            //     })
-            //     const imgBBphoto = res.data.data.display_url
-            //     console.log(imgBBphoto)
-            //     setPhoto(imgBBphoto)
-            // }
-            // else {
-            //     setPhoto(profileImage)
-            // }
+                })
+                const imgBBphoto = res.data.data.display_url
+           
 
 
 
+console.log(imgBBphoto)
 
-
-            setTimeout(() => {
+            setTimeout(async() => {
                 const userInfo = {
                     name: name,
-                    profileImage: photo,
+                    biodataId:createId,
+                    profileImage: imgBBphoto,
                     biodataType: biodataType,
                     permanentDivision: permanentDivision,
                     presentDivision: presentDivision,
@@ -122,27 +119,28 @@ const CreatBio = () => {
                     mobileNumber: mobileNumber
                 }
                 console.log(userInfo)
-                // setTimeout(() => {
-                //     axiosPublic.post('/biodata}', userInfo)
-                //         .then(res => {
-                //            
-                //             console.log("axios post", res.data)
-                //             if (res.data.insertedDataCount) {
-                    //             reset()
-                //                 Swal.fire({
-                //                     position: "center",
-                //                     icon: "success",
-                //                     title: "Successfully Created",
-                //                     showConfirmButton: false,
-                //                     timer: 1500
-                //                 });
-                //             }
+                setTimeout(() => {
+                    axiosPublic.post('/biodata', userInfo)
+                        .then(res => {
+                           
+                            console.log("axios post", res.data)
+                            if (res.data.insertedId) {
+                                refetch()
+                                reset()
+                                Swal.fire({
+                                    position: "center",
+                                    icon: "success",
+                                    title: "Successfully Created",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            }
 
-                //         })
-                //         .catch(err => {
-                //             console.log(err.message)
-                //         })
-                // }, 30);
+                        })
+                        .catch(err => {
+                            console.log(err.message)
+                        })
+                }, 30);
 
             }, 50);
         }, 100);
@@ -162,10 +160,9 @@ const CreatBio = () => {
                 </Taitle>
                 <form
                         onSubmit={handleSubmit(onSubmit)}
-                        className="w-full  relative bg-[#231f39]/60 rounded-[6px] shadow-[0px_15px_39px_16px_rgba(52,45,91,0.65)] backdrop-blur-sm mx-2 overflow-hidden  ">
+                        className="w-full  relative bg-[#231f39]/60 rounded-[6px] shadow-[0px_15px_39px_16px_rgba(52,45,91,0.65)]   ">
                         <div className=" ">
                             <div className="text-center">
-                                 <h2 className="block my-1 text-center">Bio-Data Id : </h2>
                                 <div className="max-w-sm mx-auto">
                                     <label htmlFor="photobutton" className="text-xs font-medium text-gray-500">Update Your Photo :</label>
                                     <div className="relative z-0 mt-0.5 flex w-full -space-x-px">
@@ -175,6 +172,7 @@ const CreatBio = () => {
                                 </div>
 
                                
+                                <h1 className=""><h1 className="text-xl font-bold">Biodata Id :</h1><input disabled defaultValue={createId}  type="text" name="name" id="" className="rounded bg-blue-gray-500 p-1 text-center" /></h1>
                                 <h1 className=""><h1 className="text-xl font-bold">Name :</h1><input {...register("name",{ required: true })}  type="text" name="name" id="" className="rounded bg-blue-gray-500 p-1 text-center" /></h1>
                                 {errors.name && <span>PLS give a Photo-URL</span>}
                                 <h1 className=""><h1 className="text-xl font-bold">Permanent Division :</h1>
@@ -257,7 +255,7 @@ const CreatBio = () => {
                                     </div>
                                     <div className=" px-2 space-y-6">
                                         <h1 className=""><h1 className="text-xl font-bold">Age :</h1>
-                                            <input {...register("age",{ required: true })} type="text" name="" id="" className="rounded bg-blue-gray-500 p-1 text-center" />
+                                            <input {...register("age",{ required: true })} type="text" name="age" id="" className="rounded bg-blue-gray-500 p-1 text-center" />
                                         </h1>
                                         {errors.age && <span>give your age</span>}
                                         <h1 className=""><h1 className="text-xl font-bold">Height :</h1>

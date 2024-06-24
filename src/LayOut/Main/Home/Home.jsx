@@ -1,3 +1,4 @@
+import Stats from "../../../Shared/Stats";
 import Banner from "./Banner";
 import HowWorks from "./HowWorks";
 import ProfileCard from "./ProfileCard";
@@ -17,7 +18,7 @@ const Home = () => {
             <Banner></Banner>
             <ProfileCard></ProfileCard>
             <HowWorks></HowWorks>
-            <SucessCounter></SucessCounter>
+            <Stats></Stats>
             <SucessStory></SucessStory>
         </div>
     );
